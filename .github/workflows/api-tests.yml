@@ -2,7 +2,69 @@ name: Explore With Me API Tests
 
 on:
   pull_request:
+  workflow_call:
 
 jobs:
-  build:
-    uses: yandex-praktikum/java-explore-with-me/.github/workflows/api-tests.yml@ci
+  build-ewm:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout target repo
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Checkout tests
+        uses: actions/checkout@v3
+        with:
+          repository: 'yandex-praktikum/java-explore-with-me'
+          ref: ${{ github.event.pull_request.head.ref }}
+          path: tests
+
+      - name: Check and Build application
+        run: |
+          mvn install -P check --no-transfer-progress
+          docker-compose build
+
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      - name: Install newman
+        run: |
+          npm install -g newman
+
+      - name: Run Application
+        run: |
+          docker-compose up --detach
+          chmod a+x ./tests/.github/workflows/wait-for-it.sh
+          ./tests/.github/workflows/wait-for-it.sh -t 60 localhost:8080
+          ./tests/.github/workflows/wait-for-it.sh -t 60 localhost:9090
+          docker-compose ps
+          docker-compose logs
+
+      - name: Run POSTMAN tests on ewm-main-service
+        run: |
+          newman run ./tests/postman/ewm-main-service.json --delay-request 50 -r cli --verbose
+
+      - name: Run POSTMAN tests on ewm-stat-service
+        run: |
+          newman run ./tests/postman/ewm-stat-service.json --delay-request 50 -r cli --verbose
+
+      - name: Compose logs
+        if: ${{ failure() }}
+        run: |
+          docker-compose ps
+          docker-compose logs
+          docker-compose down
+
+      - name: Compose down
+        run: |
+          docker-compose down

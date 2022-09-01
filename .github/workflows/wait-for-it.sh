@@ -37,7 +37,7 @@ wait_for()
             WAITFORIT_result=$?
         else
 #            (echo -n > /dev/tcp/$WAITFORIT_HOST/$WAITFORIT_PORT) >/dev/null 2>&1
-            (curl --fail --silent $WAITFORIT_HOST:$WAITFORIT_PORT/actuator/health | grep UP) >/dev/null 2>&1
+            (curl --fail --silent http://$WAITFORIT_HOST:$WAITFORIT_PORT/actuator/health | grep UP) >/dev/null 2>&1
             WAITFORIT_result=$?
         fi
         if [[ $WAITFORIT_result -eq 0 ]]; then
