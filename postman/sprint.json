@@ -1,0 +1,16 @@
+{
+	"info": {
+		"_postman_id": "02b3b696-d51d-4750-b4dc-35e6712fd023",
+		"name": "Explore With Me (develop)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2036415"
+	},
+	"item": [
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		}
+	]
+}
