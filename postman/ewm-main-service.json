@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b1f54be2-7bb2-41cc-b902-c02c045eb12a",
+		"_postman_id": "dc380906-11f6-48d2-b4ad-6be100e2c4ca",
 		"name": "\"Explore With Me\" API сервер",
 		"description": "Documentation \"Explore With Me\" API v1.0",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -12903,39 +12903,26 @@
 					]
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		},
 		{
-			"name": "New Request",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"pm.collectionVariables.set('usersCount', 1);\r",
-							"pm.collectionVariables.set('uid', 1);\r",
-							"pm.collectionVariables.set('eid', 1);\r",
-							"pm.collectionVariables.set('catid', 1);\r",
-							"pm.collectionVariables.set('reqid', 1);\r",
-							"pm.collectionVariables.set('compid', 1);"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						""
-					]
-				}
-			},
-			"response": []
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"variable": [
@@ -12950,11 +12937,13 @@
 		},
 		{
 			"key": "usersCount",
-			"value": 1
+			"value": 1,
+			"type": "number"
 		},
 		{
 			"key": "catid",
-			"value": 1
+			"value": 1,
+			"type": "number"
 		},
 		{
 			"key": "request_body",
@@ -12970,7 +12959,8 @@
 		},
 		{
 			"key": "uid",
-			"value": 1
+			"value": 1,
+			"type": "number"
 		},
 		{
 			"key": "catname",
@@ -12978,11 +12968,13 @@
 		},
 		{
 			"key": "eid",
-			"value": 1
+			"value": 1,
+			"type": "number"
 		},
 		{
 			"key": "compid",
-			"value": 1
+			"value": 1,
+			"type": "number"
 		},
 		{
 			"key": "toCheck",
@@ -12998,7 +12990,8 @@
 		},
 		{
 			"key": "reqid",
-			"value": 1
+			"value": 1,
+			"type": "number"
 		}
 	]
 }
