@@ -39,7 +39,7 @@
 											"    name = 'name' + pm.collectionVariables.get(\"usersCount\");\r",
 											"    pm.collectionVariables.set('name', name)\r",
 											"    pm.collectionVariables.set(\"usersCount\", pm.collectionVariables.get(\"usersCount\") + 1)\r",
-											"    var bodyId = {\r",
+											"    bodyId = {\r",
 											"        'id': pm.collectionVariables.get('catid'),\r",
 											"        'name': name\r",
 											"    };\r",
