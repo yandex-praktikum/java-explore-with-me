@@ -646,8 +646,6 @@
 											"    body: JSON.stringify(body),\r",
 											"    header: {'Content-Type': 'application/json'}\r",
 											"}, (error, response) => {\r",
-											"    console.log(response.json().id)\r",
-											"    console.log(typeof(response.json().id))\r",
 											"    pm.collectionVariables.set('catid', parseInt(response.json().id))\r",
 											"});\r",
 											""
