@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "dc380906-11f6-48d2-b4ad-6be100e2c4ca",
+		"_postman_id": "697879e9-dc41-432e-9ac2-577ad301fa5f",
 		"name": "\"Explore With Me\" API сервер",
 		"description": "Documentation \"Explore With Me\" API v1.0",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -646,7 +646,9 @@
 											"    body: JSON.stringify(body),\r",
 											"    header: {'Content-Type': 'application/json'}\r",
 											"}, (error, response) => {\r",
-											"    pm.collectionVariables.set('catid', response.json().id)\r",
+											"    console.log(response.json().id)\r",
+											"    console.log(typeof(response.json().id))\r",
+											"    pm.collectionVariables.set('catid', parseInt(response.json().id))\r",
 											"});\r",
 											""
 										],
@@ -675,7 +677,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/admin/categories/:catId?catId={{catid}}",
+									"raw": "{{baseUrl}}/admin/categories/:catId",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -684,17 +686,10 @@
 										"categories",
 										":catId"
 									],
-									"query": [
-										{
-											"key": "catId",
-											"value": "{{catid}}",
-											"description": "(Required) id категории"
-										}
-									],
 									"variable": [
 										{
 											"key": "catId",
-											"value": null
+											"value": "{{catid}}"
 										}
 									]
 								},
