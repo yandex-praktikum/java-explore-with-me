@@ -1,12 +1,292 @@
 {
 	"info": {
-		"_postman_id": "697879e9-dc41-432e-9ac2-577ad301fa5f",
-		"name": "\"Explore With Me\" API статистика",
-		"description": "Documentation \"Explore With Me\" API v1.0",
+		"_postman_id": "93bfb851-d76c-42e2-9a6c-e33b581f35bd",
+		"name": "\"Explore with me\" API статистика",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "13708500"
 	},
 	"item": [
+		{
+			"name": "Сохранение информации о том, что к эндпоинту был запрос",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const main = async () => {\r",
+							"    const api = new API(pm);\r",
+							"    const rnd = new RandomUtils();\r",
+							"\r",
+							"    let post;\r",
+							"    try {\r",
+							"        post = rnd.getPost();\r",
+							"    } catch(err) {\r",
+							"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
+							"    }\r",
+							"\r",
+							"    pm.request.body.update({\r",
+							"        mode: 'raw',\r",
+							"        raw: JSON.stringify(post),\r",
+							"        options: { raw: { language: 'json' } }\r",
+							"    });\r",
+							"};\r",
+							"\r",
+							"const interval = setInterval(() => {}, 1000);\r",
+							"\r",
+							"setTimeout(async () => \r",
+							"    {\r",
+							"        try {\r",
+							"            await main();\r",
+							"        } catch (e) {\r",
+							"            console.error(e);\r",
+							"        } finally {\r",
+							"            clearInterval(interval);\r",
+							"        }\r",
+							"    },  \r",
+							"    100 \r",
+							");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {\r",
+							"    pm.response.to.be.ok;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/hit",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"hit"
+					]
+				},
+				"description": "Сохранение информации о том, что на uri конкретного сервиса был отправлен запрос пользователем. Название сервиса, uri и ip пользователя указаны в теле запроса."
+			},
+			"response": [
+				{
+					"name": "Информация сохранена",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"app\": \"ewm-main-service\",\n  \"uri\": \"/events/1\",\n  \"ip\": \"192.163.0.1\",\n  \"timestamp\": \"2022-09-06 11:00:23\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/hit",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"hit"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Получение статистики по посещениям. Обратите внимание: значение даты и времени нужно закодировать (например используя java.net.URLEncoder.encode) ",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const main = async () => {\r",
+							"    const api = new API(pm);\r",
+							"    const rnd = new RandomUtils();\r",
+							"\r",
+							"    let post, data;\r",
+							"    try {      \r",
+							"        post = rnd.getPost()\r",
+							"        console.log(post)\r",
+							"        await api.addPost(post)\r",
+							"        pm.collectionVariables.set(\"uri\", post.uri)\r",
+							"    } catch(err) {\r",
+							"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
+							"    }\r",
+							"};\r",
+							"\r",
+							"const interval = setInterval(() => {}, 1000);\r",
+							"\r",
+							"setTimeout(async () => \r",
+							"    {\r",
+							"        try {\r",
+							"            await main();\r",
+							"        } catch (e) {\r",
+							"            console.error(e);\r",
+							"        } finally {\r",
+							"            clearInterval(interval);\r",
+							"        }\r",
+							"    },  \r",
+							"    100 \r",
+							");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {\r",
+							"    pm.response.to.be.ok;    \r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"const target = pm.response.json()[0];\r",
+							"\r",
+							"pm.test(\"Посты должны содержать поля: app, uri, hits\", function () {\r",
+							"    pm.expect(target).to.have.all.keys('app', 'uri', 'hits');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/stats?start=2020-05-05 00:00:00&end=2023-05-05 00:00:00&uris={{uri}}&unique=false",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"stats"
+					],
+					"query": [
+						{
+							"key": "start",
+							"value": "2020-05-05 00:00:00",
+							"description": "(Required) Дата и время начала диапазона за который нужно выгрузить статистику (в формате \"yyyy-MM-dd HH:mm:ss\")"
+						},
+						{
+							"key": "end",
+							"value": "2023-05-05 00:00:00",
+							"description": "(Required) Дата и время конца диапазона за который нужно выгрузить статистику (в формате \"yyyy-MM-dd HH:mm:ss\")"
+						},
+						{
+							"key": "uris",
+							"value": "{{uri}}",
+							"description": "Список uri для которых нужно выгрузить статистику"
+						},
+						{
+							"key": "uris",
+							"value": "aliqua o",
+							"description": "Список uri для которых нужно выгрузить статистику",
+							"disabled": true
+						},
+						{
+							"key": "unique",
+							"value": "false",
+							"description": "Нужно ли учитывать только уникальные посещения (только с уникальным ip)"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Статистика собрана",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/stats?start=amet non occaecat consequat&end=amet non occaecat consequat&uris=dolore nostrud Ut quis&uris=reprehenderit elit irure&unique=false",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"stats"
+							],
+							"query": [
+								{
+									"key": "start",
+									"value": "amet non occaecat consequat"
+								},
+								{
+									"key": "end",
+									"value": "amet non occaecat consequat"
+								},
+								{
+									"key": "uris",
+									"value": "dolore nostrud Ut quis"
+								},
+								{
+									"key": "uris",
+									"value": "reprehenderit elit irure"
+								},
+								{
+									"key": "unique",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "[\n  {\n    \"app\": \"ewm-main-service\",\n    \"uri\": \"/events/1\",\n    \"hits\": 6\n  },\n  {\n    \"app\": \"ewm-main-service\",\n    \"uri\": \"/events/1\",\n    \"hits\": 6\n  }\n]"
+				}
+			]
+		}
 	],
 	"event": [
 		{
@@ -14,7 +294,90 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					""
+					"API = class {",
+					"    constructor(postman, verbose = false, baseUrl = \"http://localhost:9090\") {",
+					"        this.baseUrl = baseUrl;",
+					"        this.pm = postman;",
+					"        this._verbose = verbose;",
+					"    }",
+					"",
+					"    async addPost(post, verbose=null) {",
+					"        return this.post(\"/hit\", post, \"Ошибка при сохранении информации о запросе к эндпойнту: \", verbose);",
+					"    }",
+					"",
+					"",
+					"    async post(path, body, errorText = \"Ошибка при выполнении post-запроса: \", verbose=null) {",
+					"        return this.sendRequest(\"POST\", path, body, errorText);",
+					"    }",
+					"",
+					"    async sendRequest(method, path, body=null, errorText = \"Ошибка при выполнении запроса: \", verbose=null) {",
+					"        return new Promise((resolve, reject) => {",
+					"            verbose = verbose == null ? this._verbose : verbose;",
+					"            const request = {",
+					"                url: this.baseUrl + path,",
+					"                method: method,",
+					"                body: body == null ? \"\" : JSON.stringify(body),",
+					"                header: { \"Content-Type\": \"application/json\" },",
+					"            };",
+					"",
+					"            if(verbose) {",
+					"                console.log(\"Отправляю запрос: \", request);",
+					"            }",
+					"",
+					"            try {",
+					"                this.pm.sendRequest(request, (error, response) => {",
+					"                    if(error || (response.code >= 400 && response.code <= 599)) {",
+					"                        let err = error ? error : JSON.stringify(response.json());",
+					"                        console.error(\"При выполнении запроса к серверу возникла ошика.\\n\", err,",
+					"                             \"\\nДля отладки проблемы повторите такой же запрос к вашей программе \" + ",
+					"                             \"на локальном компьютере. Данные запроса:\\n\", JSON.stringify(request));",
+					"",
+					"                        reject(new Error(errorText + err));",
+					"                    }",
+					"",
+					"                    if(verbose) {",
+					"                        console.log(\"Результат обработки запроса: код состояния - \", response.code, \", тело: \", response.json());",
+					"                    }",
+					"                    try{",
+					"                        resolve(response.json());",
+					"                    } catch(err){",
+					"                        resolve(response);",
+					"                    }",
+					"                    ",
+					"                });",
+					"            } catch(err) {",
+					"                if(verbose) {",
+					"                    console.error(errorText, err);",
+					"                }",
+					"                return Promise.reject(err);",
+					"            }",
+					"        });",
+					"    }",
+					"};",
+					"",
+					"RandomUtils = class {",
+					"    constructor() {}",
+					"",
+					"    getPost() {",
+					"        return {",
+					"            app: \"ewm-main-service\",",
+					"            uri: \"/event/\" + pm.variables.replaceIn('{{$randomInt}}'),",
+					"            ip: pm.variables.replaceIn('{{$randomIP}}'),",
+					"            timestamp: this.getPastDateTime()",
+					"        }",
+					"    }",
+					"",
+					"    getPastDateTime(hourShift = 5, minuteShift=0, yearShift=0) {",
+					"        let moment = require('moment');",
+					"",
+					"        let m = moment();",
+					"        m.subtract(hourShift, 'hour');",
+					"        m.subtract(minuteShift, 'minute');",
+					"        m.subtract(yearShift, 'year');",
+					"",
+					"        return m.format('YYYY-MM-DD HH:mm:ss');",
+					"    }",
+					"}"
 				]
 			}
 		},
@@ -35,66 +398,8 @@
 			"type": "string"
 		},
 		{
-			"key": "name",
-			"value": ""
-		},
-		{
-			"key": "usersCount",
-			"value": 1,
-			"type": "number"
-		},
-		{
-			"key": "catid",
-			"value": 1,
-			"type": "number"
-		},
-		{
-			"key": "request_body",
-			"value": ""
-		},
-		{
-			"key": "mail",
-			"value": ""
-		},
-		{
-			"key": "response",
-			"value": ""
-		},
-		{
-			"key": "uid",
-			"value": 1,
-			"type": "number"
-		},
-		{
-			"key": "catname",
-			"value": ""
-		},
-		{
-			"key": "eid",
-			"value": 1,
-			"type": "number"
-		},
-		{
-			"key": "compid",
-			"value": 1,
-			"type": "number"
-		},
-		{
-			"key": "toCheck",
-			"value": ""
-		},
-		{
-			"key": "newDataToSet",
-			"value": ""
-		},
-		{
-			"key": "uid1",
-			"value": ""
-		},
-		{
-			"key": "reqid",
-			"value": 1,
-			"type": "number"
+			"key": "uri",
+			"value": "1"
 		}
 	]
 }
