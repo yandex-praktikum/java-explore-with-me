@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.List;
 
 public interface EventService {
-    //***ADMIN METHOD'S***
+    //***ADMIN METHOD'S*** ↓
     List<EventFullDto> getAllEventsForAdm(List<Long> users,
                                           List<EventStatus> states,
                                           List<Long> categories,
@@ -25,8 +25,8 @@ public interface EventService {
     EventFullDto admUpdateEvent(long eventId, AdminUpdateEventRequestDto updEvent);
 
     EventFullDto setStatusEvent(long eventId, EventStatus b);
-    
-    //***PRIVATE METHOD'S***
+
+    //***PRIVATE METHOD'S*** ↓
     List<EventShortDto> getAllByUserId(long userId, int from, int size);
 
     EventFullDto updateEvent(long userId, UpdateEventRequestDto updEvent);
@@ -41,7 +41,7 @@ public interface EventService {
 
     ParticipationRequestDto setStatusParticipationRequest(long userId, long eventId, long reqId, RequestStatus status);
 
-    //***PRIVATE METHOD'S***
+    //***PRIVATE METHOD'S*** ↓
     Collection<EventShortDto> getAll(String text,
                                      List<Category> categories,
                                      Boolean paid,

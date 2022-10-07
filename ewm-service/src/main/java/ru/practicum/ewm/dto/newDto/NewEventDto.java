@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.aspectj.lang.annotation.After;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Value;
 import ru.practicum.ewm.model.Location;
 
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
@@ -26,7 +28,7 @@ public class NewEventDto {
     @Length(min = 20, max = 7000)
     private String description;
     @Positive
-    private int category;
+    private long category;
     @NotNull
     private Location location;
     @Value("0")
@@ -37,6 +39,7 @@ public class NewEventDto {
     private Boolean requestModeration;
     @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Future
     private LocalDateTime eventDate;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdOn = LocalDateTime.now();

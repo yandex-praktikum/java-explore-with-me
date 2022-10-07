@@ -32,6 +32,8 @@ public class Event {
     private User initiator;
     @Column(name = "participant_limit")
     private Integer participantLimit;
+    @Column(name = "confirmed_requests")
+    private int confirmedRequests;
     @Column(name = "lat")
     private Double lat;
     @Column(name = "lon")

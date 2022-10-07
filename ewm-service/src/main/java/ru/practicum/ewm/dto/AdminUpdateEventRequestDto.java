@@ -17,14 +17,14 @@ public class AdminUpdateEventRequestDto {
     private String annotation;
     private String description;
     private String title;
-    private long category;
+    private Long category;
     private Integer participantLimit;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime eventDate;
     private Location location;
-    private boolean paid;
-    private boolean requestModeration;
+    private Boolean paid;
+    private Boolean requestModeration;
 
 
 }

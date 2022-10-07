@@ -3,6 +3,7 @@ package ru.practicum.ewm.controller.admin;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.dto.CompilationDto;
+import ru.practicum.ewm.dto.newDto.NewCompilationDto;
 import ru.practicum.ewm.service.CompilationService;
 
 @RestController
@@ -12,7 +13,7 @@ public class CompilationAdmController {
     CompilationService service;
 
     @PostMapping
-    public CompilationDto createCompilation(@RequestBody CompilationDto dto) {
+    public CompilationDto createCompilation(@RequestBody NewCompilationDto dto) {
         return service.create(dto);
     }
 

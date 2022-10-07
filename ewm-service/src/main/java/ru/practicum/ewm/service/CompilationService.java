@@ -1,12 +1,13 @@
 package ru.practicum.ewm.service;
 
 import ru.practicum.ewm.dto.CompilationDto;
+import ru.practicum.ewm.dto.newDto.NewCompilationDto;
 
 import java.util.Collection;
 
 public interface CompilationService {
-    //***ADMIN METHOD'S***
-    CompilationDto create(CompilationDto dto);
+    //***ADMIN METHOD'S*** ↓
+    CompilationDto create(NewCompilationDto dto);
 
     void delete(long compId);
 
@@ -16,7 +17,7 @@ public interface CompilationService {
 
     CompilationDto installPin(long compId, boolean value);
 
-    //***PUBLIC METHOD'S***
+    //***PUBLIC METHOD'S*** ↓
     Collection<CompilationDto> getAll(Boolean pinned, int from, int size);
 
     CompilationDto get(long compId);

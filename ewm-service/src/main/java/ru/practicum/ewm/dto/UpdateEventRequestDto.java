@@ -12,12 +12,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class UpdateEventRequestDto {
     private Long eventId;
-    private String title;
     private String annotation;
     private String description;
-    private Integer category;
+    private String title;
+    private Long category;
     private Integer participantLimit;
     private Boolean paid;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime eventDate;
 }
