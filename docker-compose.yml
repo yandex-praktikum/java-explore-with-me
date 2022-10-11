@@ -31,7 +31,7 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5432/ewm_service
       - SERVER_PORT=8080
-      - STATS_SERVER_URL=http://server:9090
+      - STATS_SERVER_URL=http://stats-server:9090
     depends_on:
       - ewm-db
 
