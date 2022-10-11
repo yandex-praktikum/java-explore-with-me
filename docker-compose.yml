@@ -1,7 +1,8 @@
 version: '3.1'
 services:
   stats-server:
-    build: ewm-stats
+    build: ./ewm-stats
+    image: ewm-stats-dock
     container_name: ewm-stats-container
     ports:
       - "9090:9090"
@@ -13,7 +14,7 @@ services:
 
   stats-db:
     image: postgres:14-alpine
-    container_name: stats-dg-container
+    container_name: stats-db-container
     ports:
       - "5432:5432"
     environment:
@@ -22,7 +23,8 @@ services:
       - POSTGRES_PASSWORD=postgres
 
   ewm-service:
-    build: ewm-service
+    build: ./ewm-service
+    image: ewm-service-dock
     container_name: ewm-service-container
     ports:
       - "8080:8080"
@@ -33,12 +35,11 @@ services:
     depends_on:
       - ewm-db
 
-
   ewm-db:
     image: postgres:14-alpine
     container_name: ewm-db-container
     ports:
-      - "5433:5432"
+      - "6541:5432"
     environment:
       - POSTGRES_DB=ewm_service
       - POSTGRES_USER=postgres

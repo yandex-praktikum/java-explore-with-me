@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>ewm-service</artifactId>
+    <artifactId>stats-server</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -91,7 +91,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>ru.practicum.ewmservice.ExploreWithMe</mainClass>
+                            <mainClass>ru.practicum.stats.StatsApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
