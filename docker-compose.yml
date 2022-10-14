@@ -1,15 +1,60 @@
-version: '3.1'
+version: '3.8'
 services:
-  stats-server:
-    ports:
-      - "9090:9090"
-
-  stats-db:
-    image: postgres:14-alpine
-
-  ewm-service:
+  gateway:
+    build: gateway
+    image: gateway_image
+    container_name: gateway_container
     ports:
       - "8080:8080"
+    depends_on:
+      - server
+    environment:
+      - MAIN_SERVER_URL=http://server:8989
 
-  ewm-db:
-    image: postgres:14-alpine
+  server:
+    build: server
+    image: server_image
+    container_name: server_container
+    ports:
+      - "8989:8989"
+    depends_on:
+      - server-db
+      - stat
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://server-db:5432/ExploreWithMe
+      - STAT_SERVER_URL=http://stat:9090
+
+  server-db:
+    image: postgres:13.7-alpine
+    container_name: postgres_container
+    volumes:
+      - /var/lib/postgresql/data/
+    ports:
+      - "6541:5432"
+    environment:
+      - POSTGRES_DB=ExploreWithMe
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+
+  stat:
+    build: stat
+    image: stat_image
+    container_name: stat_container
+    ports:
+      - "9090:9090"
+    depends_on:
+      - stat-db
+    environment:
+     - SPRING_DATASOURCE_URL=jdbc:postgresql://stat-db:5432/ExploreWithMeStat
+
+  stat-db:
+    image: postgres:13.7-alpine
+    container_name: stat_db_container
+    volumes:
+      - /var/lib/postgresql/data/
+    ports:
+      - "6542:5432"
+    environment:
+      - POSTGRES_DB=ExploreWithMeStat
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
