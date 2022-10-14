@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4151862f-bd34-422b-b4a6-b928b8bf1640",
+		"_postman_id": "55226b53-4732-4917-9ca3-90c5a788aabf",
 		"name": "Test Explore With Me - Main service",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "13708500"
@@ -3729,6 +3729,7 @@
 											"        const category = await api.addCategory(rnd.getCategory());\r",
 											"        event = await api.addEvent(user.id, rnd.getEvent(category.id));\r",
 											"        event = await api.publishEvent(event.id);\r",
+											"        pm.collectionVariables.set(\"eid\", event.id)\r",
 											"        pm.collectionVariables.set(\"uid\", user.id)\r",
 											"        new_event = rnd.getEvent(category.id);\r",
 											"    } catch(err) {\r",
@@ -3742,7 +3743,6 @@
 											"            \"category\": new_event.category,\r",
 											"            \"description\": new_event.description,\r",
 											"            \"eventDate\": new_event.eventDate,\r",
-											"            \"eventId\": event.id,\r",
 											"            \"paid\": new_event.paid,\r",
 											"            \"participantLimit\": new_event.participantLimit,\r",
 											"            \"title\": new_event.title\r",
@@ -3796,6 +3796,7 @@
 											"    pm.expect(target).to.have.property('createdOn');\r",
 											"    pm.expect(target).to.have.property('location');\r",
 											"    pm.expect(target).to.have.property('requestModeration');\r",
+											"    pm.expect(target).to.have.property('publishedOn');\r",
 											"});\r",
 											"\r",
 											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {\r",
