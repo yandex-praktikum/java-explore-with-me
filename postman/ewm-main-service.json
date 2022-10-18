@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "55226b53-4732-4917-9ca3-90c5a788aabf",
+		"_postman_id": "9fc27b0f-1a89-4a43-ba32-eae21299ce16",
 		"name": "Test Explore With Me - Main service",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "13708500"
+		"_exporter_id": "23073145"
 	},
 	"item": [
 		{
@@ -728,12 +728,8 @@
 											"            url: pm.collectionVariables.get(\"baseUrl\") + \"/categories/\" + catId,\r",
 											"            method: 'GET',\r",
 											"        }, (error, response) => {\r",
-											"            if(error || (response.code >= 400 && response.code <= 599)) {\r",
-											"                throw new Error(\"Ошибка при поиске категории по id: \" + error);\r",
-											"            }\r",
-											"            \r",
 											"            pm.test(\"Категория не должна быть найдена после удаления\", function () {\r",
-											"                pm.expect(response.json()).to.be.null;\r",
+											"                pm.expect(response.code).to.eql(404);\r",
 											"            });\r",
 											"        });"
 										],
@@ -1475,9 +1471,6 @@
 											"            url: pm.collectionVariables.get(\"baseUrl\") + \"/compilations/\" + compId,\r",
 											"            method: 'GET',\r",
 											"        }, (error, response) => {\r",
-											"            if(error || (response.code >= 400 && response.code <= 599)) {\r",
-											"                throw new Error(\"Ошибка при поиске подборки по id: \" + error);\r",
-											"            }\r",
 											"            \r",
 											"            pm.test(\"Событие не должно быть найдено в подборке после удаления\", function () {\r",
 											"                pm.expect(response.json().events.length).equal(0);\r",
@@ -1848,9 +1841,6 @@
 											"            url: pm.collectionVariables.get(\"baseUrl\") + \"/compilations/\" + compId,\r",
 											"            method: 'GET',\r",
 											"        }, (error, response) => {\r",
-											"            if(error || (response.code >= 400 && response.code <= 599)) {\r",
-											"                throw new Error(\"Ошибка при поиске подборки по id: \" + error);\r",
-											"            }\r",
 											"            \r",
 											"            pm.test(\"Событие должно быть найдено в подборке после добавления\", function () {\r",
 											"                pm.expect(response.json().events[0].id).equal(eventId);\r",
@@ -2219,9 +2209,6 @@
 											"            url: pm.collectionVariables.get(\"baseUrl\") + \"/compilations/\" + compId,\r",
 											"            method: 'GET',\r",
 											"        }, (error, response) => {\r",
-											"            if(error || (response.code >= 400 && response.code <= 599)) {\r",
-											"                throw new Error(\"Ошибка при поиске подборки по id: \" + error);\r",
-											"            }\r",
 											"            \r",
 											"            pm.test(\"Подборка должна быть откреплена после выполнения запроса\", function () {\r",
 											"                pm.expect(response.json().pinned).equal(false);\r",
@@ -2548,9 +2535,6 @@
 											"            url: pm.collectionVariables.get(\"baseUrl\") + \"/compilations/\" + compId,\r",
 											"            method: 'GET',\r",
 											"        }, (error, response) => {\r",
-											"            if(error || (response.code >= 400 && response.code <= 599)) {\r",
-											"                throw new Error(\"Ошибка при поиске подборки по id: \" + error);\r",
-											"            }\r",
 											"            \r",
 											"            pm.test(\"Подборка должна быть закреплена после выполнения запроса\", function () {\r",
 											"                pm.expect(response.json().pinned).equal(true);\r",
