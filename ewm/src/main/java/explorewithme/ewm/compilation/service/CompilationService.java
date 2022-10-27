@@ -1,4 +1,4 @@
-package explorewithme.ewm.compilation;
+package explorewithme.ewm.compilation.service;
 
 import explorewithme.ewm.compilation.dto.CompilationDto;
 import explorewithme.ewm.compilation.dto.NewCompilationDto;

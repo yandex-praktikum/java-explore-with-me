@@ -1,5 +1,6 @@
-package explorewithme.ewm.compilation;
+package explorewithme.ewm.compilation.repository;
 
+import explorewithme.ewm.compilation.model.Compilation;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

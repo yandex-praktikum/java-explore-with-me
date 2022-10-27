@@ -1,4 +1,4 @@
-package explorewithme.ewm.compilation;
+package explorewithme.ewm.compilation.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

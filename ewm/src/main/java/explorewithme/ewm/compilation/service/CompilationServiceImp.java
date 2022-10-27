@@ -1,8 +1,12 @@
-package explorewithme.ewm.compilation;
+package explorewithme.ewm.compilation.service;
 
 import explorewithme.ewm.compilation.dto.CompilationDto;
 import explorewithme.ewm.compilation.dto.NewCompilationDto;
 import explorewithme.ewm.compilation.mappers.CompilationMapper;
+import explorewithme.ewm.compilation.model.Compilation;
+import explorewithme.ewm.compilation.model.CompilationEvent;
+import explorewithme.ewm.compilation.repository.CompEventRepository;
+import explorewithme.ewm.compilation.repository.CompilationRepository;
 import explorewithme.ewm.events.dto.EventShortDto;
 import explorewithme.ewm.events.service.EventService;
 import explorewithme.ewm.exception.ArgumentException;

@@ -21,6 +21,10 @@
 		<java.version>11</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+	<modules>
+		<module>ewm</module>
+		<module>statistics</module>
+	</modules>
 
 	<build>
 		<pluginManagement>
