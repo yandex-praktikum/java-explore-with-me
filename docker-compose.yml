@@ -19,8 +19,8 @@ services:
   stats-server:
     #создать образ для контейнера из Dockerfile, который лежит в директории
     build: ./ewm-stat-service #это путь до Dockerfile
-    image: stats-server
-    container_name: stats-server
+    image: ewm-stat-service
+    container_name: ewm-stat-service
     ports:
       - "9090:9090"
     depends_on:
@@ -39,8 +39,8 @@ services:
 
   ewm-service:
     build: ./ewm-main-service
-    image: ewm-service
-    container_name: ewm-service
+    image: ewm-main-service
+    container_name: ewm-main-service
     ports:
       - "8080:8080"
     depends_on:
