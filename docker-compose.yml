@@ -16,17 +16,18 @@
 
 version: '3.1'
 services:
-  stats-server:
+  ewm-stat-service:
     #создать образ для контейнера из Dockerfile, который лежит в директории
     build: ./ewm-stat-service #это путь до Dockerfile
-    image: stats-server
-    container_name: stats-server
+    image: ewm-stat-service
+    container_name: ewm-stat-service
     ports:
       - "9090:9090"
     depends_on:
       - stats-db
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5432/db
+
   stats-db:
     image: postgres:14-alpine
     container_name: stats-db
@@ -37,17 +38,17 @@ services:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
 
-  ewm-service:
+  ewm-main-service:
     build: ./ewm-main-service
-    image: ewm-service
-    container_name: ewm-service
+    image: ewm-main-service
+    container_name: ewm-main-service
     ports:
       - "8080:8080"
     depends_on:
       - ewm-db
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5432/db
-      - STAT_SERVER_URL=http://stats-server:9090
+      - STAT_SERVER_URL=http://ewm-stat-service:9090
 
   ewm-db:
     image: postgres:14-alpine
