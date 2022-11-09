@@ -28,6 +28,10 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5432/db
       - SERVER_PORT=9090
+      - USERNAME=root
+      - PASSWORD=root
+      - DIALECT=org.hibernate.dialect.PostgreSQL10Dialect
+      - DRIVER=org.postgresql.Driver
 
   stats-db:
     image: postgres:14-alpine
