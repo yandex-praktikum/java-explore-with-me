@@ -55,7 +55,7 @@ services:
     environment:
       - STAT_SERVER_URL=http://ewm-stat-service:9090
       - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5432/db
-      - SERVER_PORT=9090
+      - SERVER_PORT=8080
       - USERNAME=root
       - PASSWORD=root
       - DIALECT=org.hibernate.dialect.PostgreSQL10Dialect
