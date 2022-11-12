@@ -34,7 +34,7 @@ services:
       - DRIVER=org.postgresql.Driver
 
   stats-db:
-    image: postgres:14-alpine
+    image: postgres:13.7-alpine
     container_name: stats-db
     ports:
       - "6541:5432"
@@ -62,7 +62,7 @@ services:
       - DRIVER=org.postgresql.Driver
 
   ewm-db:
-    image: postgres:14-alpine
+    image: postgres:13.7-alpine
     container_name: ewm-db
     ports:
       - "6542:5432"
