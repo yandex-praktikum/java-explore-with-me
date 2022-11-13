@@ -3,10 +3,8 @@ package ru.explorewithme.users.dto;
 import lombok.Builder;
 import lombok.Getter;
 import ru.explorewithme.admin.dto.CategoryDto;
-import ru.explorewithme.admin.dto.UserShortDto;
+import ru.explorewithme.user.dto.UserShortDto;
 import ru.explorewithme.users.model.Location;
-
-import java.time.LocalDateTime;
 
 @Builder
 @Getter

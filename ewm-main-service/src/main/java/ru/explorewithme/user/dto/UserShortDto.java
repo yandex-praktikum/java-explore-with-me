@@ -1,4 +1,4 @@
-package ru.explorewithme.admin.dto;
+package ru.explorewithme.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

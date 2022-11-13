@@ -2,14 +2,11 @@ package ru.explorewithme.users.events;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import ru.explorewithme.admin.dto.CategoryDto;
-import ru.explorewithme.admin.dto.UserDto;
 import ru.explorewithme.users.dto.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
-import java.util.HashSet;
 import java.util.List;
 
 @RestController

@@ -2,15 +2,13 @@ package ru.explorewithme.users.requests;
 
 import org.springframework.stereotype.Service;
 import ru.explorewithme.IdService;
-import ru.explorewithme.admin.model.User;
-import ru.explorewithme.admin.users.UserRepository;
+import ru.explorewithme.user.model.User;
+import ru.explorewithme.user.UserRepository;
 import ru.explorewithme.users.dto.ParticipationRequestDto;
 import ru.explorewithme.users.events.EventRepository;
 import ru.explorewithme.users.model.Event;
 import ru.explorewithme.users.model.Request;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 import java.util.List;
 

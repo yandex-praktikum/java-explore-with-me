@@ -1,9 +1,9 @@
-package ru.explorewithme.admin.users;
+package ru.explorewithme.user;
 
-import ru.explorewithme.admin.dto.NewUserRequest;
-import ru.explorewithme.admin.dto.UserDto;
-import ru.explorewithme.admin.dto.UserShortDto;
-import ru.explorewithme.admin.model.User;
+import ru.explorewithme.user.dto.NewUserRequest;
+import ru.explorewithme.user.dto.UserDto;
+import ru.explorewithme.user.dto.UserShortDto;
+import ru.explorewithme.user.model.User;
 
 public class UserMapper {
     public static User toUser(NewUserRequest newUserRequest) {

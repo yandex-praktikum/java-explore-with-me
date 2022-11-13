@@ -1,10 +1,9 @@
 package ru.explorewithme.users.events;
 
 import ru.explorewithme.admin.categories.CategoryMapper;
-import ru.explorewithme.admin.dto.AdminUpdateEventRequest;
 import ru.explorewithme.admin.model.Category;
-import ru.explorewithme.admin.model.User;
-import ru.explorewithme.admin.users.UserMapper;
+import ru.explorewithme.user.model.User;
+import ru.explorewithme.user.UserMapper;
 import ru.explorewithme.users.dto.EventFullDto;
 import ru.explorewithme.users.dto.EventShortDto;
 import ru.explorewithme.users.dto.NewEventDto;

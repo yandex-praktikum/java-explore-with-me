@@ -1,4 +1,4 @@
-package ru.explorewithme.admin.dto;
+package ru.explorewithme.user.dto;
 
 import lombok.Getter;
 import javax.validation.constraints.NotBlank;

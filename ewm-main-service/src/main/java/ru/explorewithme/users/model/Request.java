@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import ru.explorewithme.admin.model.User;
+import ru.explorewithme.user.model.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

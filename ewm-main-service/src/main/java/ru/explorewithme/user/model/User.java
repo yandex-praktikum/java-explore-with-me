@@ -1,4 +1,4 @@
-package ru.explorewithme.admin.model;
+package ru.explorewithme.user.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

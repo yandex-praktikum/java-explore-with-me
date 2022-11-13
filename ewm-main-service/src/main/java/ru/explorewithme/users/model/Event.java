@@ -2,8 +2,7 @@ package ru.explorewithme.users.model;
 
 import lombok.*;
 import ru.explorewithme.admin.model.Category;
-import ru.explorewithme.admin.model.Compilation;
-import ru.explorewithme.admin.model.User;
+import ru.explorewithme.user.model.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

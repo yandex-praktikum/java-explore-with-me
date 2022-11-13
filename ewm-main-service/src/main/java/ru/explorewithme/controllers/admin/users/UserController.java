@@ -1,10 +1,11 @@
-package ru.explorewithme.admin.users;
+package ru.explorewithme.controllers.admin.users;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.explorewithme.admin.dto.NewUserRequest;
-import ru.explorewithme.admin.dto.UserDto;
+import ru.explorewithme.user.dto.NewUserRequest;
+import ru.explorewithme.user.dto.UserDto;
+import ru.explorewithme.user.UserService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
