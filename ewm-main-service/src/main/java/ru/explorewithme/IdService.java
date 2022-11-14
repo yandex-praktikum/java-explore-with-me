@@ -1,7 +1,7 @@
 package ru.explorewithme;
 
 import org.springframework.stereotype.Service;
-import ru.explorewithme.admin.categories.CategoryRepository;
+import ru.explorewithme.category.CategoryRepository;
 import ru.explorewithme.admin.compilations.CompilationRepository;
 import ru.explorewithme.admin.model.Category;
 import ru.explorewithme.admin.model.Compilation;

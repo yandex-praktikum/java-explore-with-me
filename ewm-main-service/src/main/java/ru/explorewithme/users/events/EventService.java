@@ -6,7 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.explorewithme.IdService;
-import ru.explorewithme.admin.categories.CategoryRepository;
+import ru.explorewithme.category.CategoryRepository;
 import ru.explorewithme.admin.dto.AdminUpdateEventRequest;
 import ru.explorewithme.admin.dto.GetEventAdminRequest;
 import ru.explorewithme.admin.model.Category;

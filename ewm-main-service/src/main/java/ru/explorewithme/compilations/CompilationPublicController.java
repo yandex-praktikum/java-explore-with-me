@@ -2,9 +2,7 @@ package ru.explorewithme.compilations;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import ru.explorewithme.admin.categories.CategoryService;
 import ru.explorewithme.admin.compilations.CompilationService;
-import ru.explorewithme.admin.dto.CategoryDto;
 import ru.explorewithme.admin.dto.CompilationDto;
 
 import javax.validation.constraints.Positive;

@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.explorewithme.admin.dto.CompilationDto;
-import ru.explorewithme.admin.dto.NewCategoryDto;
 import ru.explorewithme.admin.dto.NewCompilationDto;
 
 import javax.validation.Valid;

@@ -1,10 +1,11 @@
-package ru.explorewithme.admin.categories;
+package ru.explorewithme.controllers.admin.categories;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.explorewithme.admin.dto.CategoryDto;
-import ru.explorewithme.admin.dto.NewCategoryDto;
+import ru.explorewithme.category.dto.CategoryDto;
+import ru.explorewithme.category.dto.NewCategoryDto;
+import ru.explorewithme.category.CategoryService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -27,7 +28,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{catId}")
-    public void deleteUser(@Positive(message = "id can't be < or = 0") @PathVariable Long catId) {
+    public void deleteCategory(@Positive(message = "id can't be < or = 0") @PathVariable Long catId) {
         log.info("Deleting category with id={}", catId);
         categoryService.deleteCategory(catId);
     }

@@ -2,7 +2,7 @@ package ru.explorewithme.users.dto;
 
 import lombok.Builder;
 import lombok.Getter;
-import ru.explorewithme.admin.dto.CategoryDto;
+import ru.explorewithme.category.dto.CategoryDto;
 import ru.explorewithme.user.dto.UserShortDto;
 
 @Builder

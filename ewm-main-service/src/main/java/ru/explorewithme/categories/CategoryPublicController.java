@@ -2,8 +2,8 @@ package ru.explorewithme.categories;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import ru.explorewithme.admin.categories.CategoryService;
-import ru.explorewithme.admin.dto.CategoryDto;
+import ru.explorewithme.category.CategoryService;
+import ru.explorewithme.category.dto.CategoryDto;
 
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
@@ -20,14 +20,14 @@ public class CategoryPublicController {
     }
 
     @GetMapping
-    List<CategoryDto> getCategories(@PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
-                                   @Positive @RequestParam(defaultValue = "10") Integer size) {
+    List<CategoryDto> getCategories(@RequestParam(defaultValue = "0") @PositiveOrZero  Integer from,
+                                   @RequestParam(defaultValue = "10") @Positive  Integer size) {
         log.info("Getting categories, from={}, size={}", from, size);
         return categoryService.getCategories(from, size);
     }
 
     @GetMapping("/{catId}")
-    CategoryDto getCategory(@PathVariable Long catId) {
+    CategoryDto getCategory(@PathVariable @Positive Long catId) {
         log.info("Getting category with id={}", catId);
         return categoryService.getCategory(catId);
     }

@@ -1,7 +1,7 @@
-package ru.explorewithme.admin.categories;
+package ru.explorewithme.category;
 
-import ru.explorewithme.admin.dto.CategoryDto;
-import ru.explorewithme.admin.dto.NewCategoryDto;
+import ru.explorewithme.category.dto.CategoryDto;
+import ru.explorewithme.category.dto.NewCategoryDto;
 import ru.explorewithme.admin.model.Category;
 
 public class CategoryMapper {

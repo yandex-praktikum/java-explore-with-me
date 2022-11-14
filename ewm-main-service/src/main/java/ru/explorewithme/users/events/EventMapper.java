@@ -1,6 +1,6 @@
 package ru.explorewithme.users.events;
 
-import ru.explorewithme.admin.categories.CategoryMapper;
+import ru.explorewithme.category.CategoryMapper;
 import ru.explorewithme.admin.model.Category;
 import ru.explorewithme.user.model.User;
 import ru.explorewithme.user.UserMapper;

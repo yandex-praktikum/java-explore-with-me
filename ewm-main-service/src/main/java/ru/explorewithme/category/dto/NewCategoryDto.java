@@ -1,4 +1,4 @@
-package ru.explorewithme.admin.dto;
+package ru.explorewithme.category.dto;
 
 import lombok.Getter;
 

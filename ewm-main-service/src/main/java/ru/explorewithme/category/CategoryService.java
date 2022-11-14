@@ -1,4 +1,4 @@
-package ru.explorewithme.admin.categories;
+package ru.explorewithme.category;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -6,8 +6,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.explorewithme.IdService;
-import ru.explorewithme.admin.dto.CategoryDto;
-import ru.explorewithme.admin.dto.NewCategoryDto;
+import ru.explorewithme.category.dto.CategoryDto;
+import ru.explorewithme.category.dto.NewCategoryDto;
 import ru.explorewithme.admin.model.Category;
 
 import java.util.List;
