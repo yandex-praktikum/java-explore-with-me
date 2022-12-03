@@ -29,6 +29,8 @@ jobs:
 
       - name: Check and Build application
         run: |
+          cp -rf ./tests/checkstyle.xml ./checkstyle.xml
+          cp -rf ./tests/suppressions.xml ./suppressions.xml
           mvn install -P check --no-transfer-progress
           docker-compose build
 
