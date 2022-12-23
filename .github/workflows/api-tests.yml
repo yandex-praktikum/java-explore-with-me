@@ -73,6 +73,17 @@ jobs:
           --reporter-htmlextra-logs true
           --reporter-htmlextra-template ./tests/.github/workflows/dashboard-template.hbs
 
+      - name: Run POSTMAN tests on feature
+        if: contains(github.head_ref, 'feature')
+        run: >
+          newman run ./postman/feature.json 
+          --delay-request 50 -r cli,htmlextra 
+          --verbose --color on --reporter-htmlextra-darkTheme 
+          --reporter-htmlextra-export reports/ewm_stats_report.html
+          --reporter-htmlextra-title "Отчет по тестам сервиса статистики"
+          --reporter-htmlextra-logs true
+          --reporter-htmlextra-template ./tests/.github/workflows/dashboard-template.hbs
+
       - name: Compose logs
         if: ${{ failure() }}
         run: |
@@ -81,16 +92,16 @@ jobs:
           docker-compose logs -f ewm-service >> ./ewm-service.log
           docker-compose logs -f stats-server >> ./stats-server.log
 
-      - name: Upload log artefact
+      - name: Upload log artifact
         if: ${{ failure() }}
         uses: actions/upload-artifact@v3
         with:
           name: ewm-log
           path: ./*.log
 
-      - name: Archive artefacts
-        uses: actions/upload-artifact@v3
+      - name: Archive artifacts
         if: ${{ failure() }}
+        uses: actions/upload-artifact@v3
         with:
           name: postman_tests_report
           path: reports
