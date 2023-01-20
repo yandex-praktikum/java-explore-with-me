@@ -73,7 +73,17 @@ jobs:
           npm install -g newman
           npm install -g newman-reporter-htmlextra
 
+      - name: Run Stat Application
+        if: contains(github.head_ref, 'stat')
+        run: |
+          docker-compose up --detach
+          chmod a+x ./tests/.github/workflows/wait-for-it.sh
+          ./tests/.github/workflows/wait-for-it.sh -t 60 localhost:9090
+          docker-compose ps
+          docker-compose logs
+
       - name: Run Application
+        if:  ${{ !contains(github.head_ref, 'stat') }}
         run: |
           docker-compose up --detach
           chmod a+x ./tests/.github/workflows/wait-for-it.sh
@@ -83,6 +93,7 @@ jobs:
           docker-compose logs
 
       - name: Run POSTMAN tests on ewm-main-service
+        if:  ${{ !contains(github.head_ref, 'stat') }}
         run: >
           newman run ./tests/postman/ewm-main-service.json 
           --delay-request 50 -r cli,htmlextra 
@@ -118,8 +129,8 @@ jobs:
         run: |
           docker-compose ps
           docker-compose stop
-          docker-compose logs -f ewm-service >> ./ewm-service.log
           docker-compose logs -f stats-server >> ./stats-server.log
+          docker-compose logs -f ewm-service >> ./ewm-service.log
 
       - name: Upload log artifact
         if: ${{ failure() }}
