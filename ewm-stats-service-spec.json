@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Stat service API",
+    "title": "OpenAPI definition",
     "version": "v0"
   },
   "servers": [
@@ -37,7 +37,7 @@
           "required": true
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Информация сохранена"
           }
         }
@@ -118,19 +118,24 @@
           "id": {
             "type": "integer",
             "description": "Идентификатор записи",
-            "format": "int64"
+            "format": "int64",
+            "readOnly": true,
+            "example": 1
           },
           "app": {
             "type": "string",
-            "description": "Идентификатор сервиса для которого записывается информация"
+            "description": "Идентификатор сервиса для которого записывается информация",
+            "example": "ewm-main-service"
           },
           "uri": {
             "type": "string",
-            "description": "URI для которого был осуществлен запрос "
+            "description": "URI для которого был осуществлен запрос",
+            "example": "/events/1"
           },
           "ip": {
             "type": "string",
-            "description": "IP-адрес пользователя, осуществившего запрос"
+            "description": "IP-адрес пользователя, осуществившего запрос",
+            "example": "192.163.0.1"
           },
           "timestamp": {
             "type": "string",
@@ -144,16 +149,19 @@
         "properties": {
           "app": {
             "type": "string",
-            "description": "Название сервиса"
+            "description": "Название сервиса",
+            "example": "ewm-main-service"
           },
           "uri": {
             "type": "string",
-            "description": "URI сервиса"
+            "description": "URI сервиса",
+            "example": "/events/1"
           },
           "hits": {
             "type": "integer",
             "description": "Количество просмотров",
-            "format": "int64"
+            "format": "int64",
+            "example": 6
           }
         }
       }
