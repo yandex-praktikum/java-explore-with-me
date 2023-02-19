@@ -1,0 +1,2 @@
+DELETE FROM statistic;
+ALTER TABLE statistic ALTER COLUMN id RESTART WITH 1;
