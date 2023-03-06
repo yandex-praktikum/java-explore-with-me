@@ -11,9 +11,10 @@ jobs:
     steps:
       - name: Check repo not fork and public
         run: |
-          REPO=$(curl -H "Accept: application/vnd.github+json" "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}")
+          REPO=$(gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" "/repos/${GITHUB_REPOSITORY}")
           FORK=$(jq '.fork' <<< "$REPO")
-          echo "FORK='$FORK', GITHUB_REPOSITORY_OWNER=${GITHUB_REPOSITORY_OWNER} "
+          PRIVATE=$(jq '.private' <<< "$REPO")
+          echo "FORK='$FORK', PRIVATE='$PRIVATE', GITHUB_REPOSITORY_OWNER=${GITHUB_REPOSITORY_OWNER} "
           if [[ "$FORK" == "true" ]]
           then
             echo "Use the repository automatically created by Yandex Practicum (works in fork repositories are not accepted)"
@@ -26,12 +27,65 @@ jobs:
             echo "Используйте только репозиторий созданный Yandex Practicum, работы в форк репозитории не принимаются"
             exit -2
           fi
-          if [[ "$FORK" != "false" && "$GITHUB_REPOSITORY_OWNER" != "praktikum-java" ]]
+          if [[ "$PRIVATE" == "true" && "$GITHUB_REPOSITORY_OWNER" != "praktikum-java" ]]
           then
             echo "Share your repository, make it public"
             echo "Откройте доступ к вашему репозиторию, сделайте его публичным"
             exit -3
           fi
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Check branch name
+        run: |
+          if [[ "$GITHUB_BASE_REF" != "main" && "$GITHUB_REPOSITORY_OWNER" != "praktikum-java" ]]
+          then
+            echo "Set the pull request to merge branch 'main' (instead of '$GITHUB_BASE_REF')"
+            echo "Задайте в Pull request ветку слияния 'main'  (вместо '$GITHUB_BASE_REF')"
+            exit -2
+          fi
+          echo "Github target '$GITHUB_BASE_REF' - OK"
+
+          if [[ "$GITHUB_HEAD_REF" == "stat_svc" ]]
+          then
+            echo "Statistic service - OK"
+            exit
+          fi
+          if [[ "$GITHUB_HEAD_REF" == "main_svc" ]]
+          then
+            echo "Main service - OK"
+            PULL=$(gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28"  /repos/${GITHUB_REPOSITORY}/pulls?head=${GITHUB_REPOSITORY_OWNER}:stat_svc || true)
+            OPEN=$(jq '. | length' <<< "$PULL")
+            if [[ "$OPEN" != "0" && "$GITHUB_REPOSITORY_OWNER" != "praktikum-java" ]]
+            then
+              PULL_URL=$(jq '.[0].html_url' <<< "$PULL")
+              echo "Merge the stat_svc branch pull request: ${PULL_URL}"
+              echo "Объедините pull request ветки stat_svc: ${PULL_URL}"
+              exit -3
+            fi
+            echo "Statistic service - Merged"
+            exit
+          fi
+          if [[ "$GITHUB_HEAD_REF" == "feature_comments" ]] || [[ "$GITHUB_HEAD_REF" == "feature_location_processing" ]] || [[ "$GITHUB_HEAD_REF" == "feature_moderation_enhancement" ]] || [[ "$GITHUB_HEAD_REF" == "feature_rating_events" ]]  || [[ "$GITHUB_HEAD_REF" == "feature_subscriptions" ]] 
+          then
+            echo "Feature service - OK"
+            PULL=$(gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28"  /repos/${GITHUB_REPOSITORY}/pulls?head=${GITHUB_REPOSITORY_OWNER}:main_svc || true)
+            OPEN=$(jq '. | length' <<< "$PULL")
+            if [[ "$OPEN" != "0" && "$GITHUB_REPOSITORY_OWNER" != "praktikum-java" ]]
+            then
+              PULL_URL=$(jq '.[0].html_url' <<< "$PULL")
+              echo "Merge the main_svc branch pull request: ${PULL_URL}"
+              echo "Объедините pull request ветки main_svc: ${PULL_URL}"
+              exit -4
+            fi
+            echo "Main service - Merged"
+            exit
+          fi
+          echo "Correct branch name '$GITHUB_HEAD_REF' according to the spec, allowed: stat_svc, main_svc, feature_comments, feature_location_processing, feature_moderation_enhancement, feature_rating_events, feature_subscriptions"
+          echo "Исправьте пожалуйста имя ветки '$GITHUB_HEAD_REF' согласно заданию, разрешены: stat_svc, main_svc, feature_comments, feature_location_processing, feature_moderation_enhancement, feature_rating_events, feature_subscriptions"
+          exit -1
+        env:
+          GH_TOKEN: ${{ github.token }}
 
   build-ewm:
 
