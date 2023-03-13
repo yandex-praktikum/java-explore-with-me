@@ -52,7 +52,7 @@
     "/admin/categories": {
       "post": {
         "description": "Обратите внимание: имя категории должно быть уникальным",
-        "operationId": "addCategory",
+        "operationId": "adminAddCategory",
         "requestBody": {
           "content": {
             "application/json": {
@@ -117,7 +117,7 @@
     "/admin/categories/{catId}": {
       "delete": {
         "description": "Обратите внимание: с категорией не должно быть связано ни одного события.",
-        "operationId": "deleteCategory",
+        "operationId": "adminRemoveCategory",
         "parameters": [
           {
             "description": "id категории",
@@ -174,7 +174,7 @@
       },
       "patch": {
         "description": "Обратите внимание: имя категории должно быть уникальным",
-        "operationId": "updateCategory",
+        "operationId": "adminUpdateCategory",
         "parameters": [
           {
             "description": "id категории",
@@ -250,7 +250,7 @@
     },
     "/admin/compilations": {
       "post": {
-        "operationId": "saveCompilation",
+        "operationId": "adminAddCompilation",
         "requestBody": {
           "content": {
             "application/json": {
@@ -314,7 +314,7 @@
     },
     "/admin/compilations/{compId}": {
       "delete": {
-        "operationId": "deleteCompilation",
+        "operationId": "adminRemoveCompilation",
         "parameters": [
           {
             "description": "id подборки",
@@ -354,7 +354,7 @@
         ]
       },
       "patch": {
-        "operationId": "updateCompilation",
+        "operationId": "adminUpdateCompilation",
         "parameters": [
           {
             "description": "id подборки",
@@ -415,7 +415,7 @@
     "/admin/events": {
       "get": {
         "description": "Эндпоинт возвращает полную информацию обо всех событиях подходящих под переданные условия\n\nВ случае, если по заданным фильтрам не найдено ни одного события, возвращает пустой список",
-        "operationId": "getEvents_2",
+        "operationId": "adminFindEvents",
         "parameters": [
           {
             "description": "список id пользователей, чьи события нужно найти",
@@ -536,7 +536,7 @@
     "/admin/events/{eventId}": {
       "patch": {
         "description": "Редактирование данных любого события администратором. Валидация данных не требуется.\nОбратите внимание:\n - дата начала изменяемого события должна быть не ранее чем за час от даты публикации. (Ожидается код ошибки 409)\n- событие можно публиковать, только если оно в состоянии ожидания публикации (Ожидается код ошибки 409)\n- событие можно отклонить, только если оно еще не опубликовано (Ожидается код ошибки 409)",
-        "operationId": "updateEvent_1",
+        "operationId": "adminUpdateEvent",
         "parameters": [
           {
             "description": "id события",
@@ -613,7 +613,7 @@
     "/admin/users": {
       "get": {
         "description": "Возвращает информацию обо всех пользователях (учитываются параметры ограничения выборки), либо о конкретных (учитываются указанные идентификаторы)\n\nВ случае, если по заданным фильтрам не найдено ни одного пользователя, возвращает пустой список",
-        "operationId": "getUsers",
+        "operationId": "adminGetUsers",
         "parameters": [
           {
             "description": "id пользователей",
@@ -688,7 +688,7 @@
         ]
       },
       "post": {
-        "operationId": "registerUser",
+        "operationId": "adminAddUser",
         "requestBody": {
           "content": {
             "application/json": {
@@ -752,7 +752,7 @@
     },
     "/admin/users/{userId}": {
       "delete": {
-        "operationId": "delete",
+        "operationId": "adminRemoveUser",
         "parameters": [
           {
             "description": "id пользователя",
@@ -1066,7 +1066,7 @@
     "/events": {
       "get": {
         "description": "Обратите внимание: \n- это публичный эндпоинт, соответственно в выдаче должны быть только опубликованные события\n- текстовый поиск (по аннотации и подробному описанию) должен быть без учета регистра букв\n- если в запросе не указан диапазон дат [rangeStart-rangeEnd], то нужно выгружать события, которые произойдут позже текущей даты и времени\n- информация о каждом событии должна включать в себя количество просмотров и количество уже одобренных заявок на участие\n- информацию о том, что по этому эндпоинту был осуществлен и обработан запрос, нужно сохранить в сервисе статистики\n\nВ случае, если по заданным фильтрам не найдено ни одного события, возвращает пустой список",
-        "operationId": "getEvents_1",
+        "operationId": "findEvents",
         "parameters": [
           {
             "description": "текст для поиска в содержимом аннотации и подробном описании события",
@@ -1203,7 +1203,7 @@
     "/events/{id}": {
       "get": {
         "description": "Обратите внимание:\n- событие должно быть опубликовано\n- информация о событии должна включать в себя количество просмотров и количество подтвержденных запросов\n- информацию о том, что по этому эндпоинту был осуществлен и обработан запрос, нужно сохранить в сервисе статистики\n\nВ случае, если события с заданным id не найдено, возвращает статус код 404",
-        "operationId": "getEvent_1",
+        "operationId": "getEvent",
         "parameters": [
           {
             "description": "id события",
@@ -1269,7 +1269,7 @@
     "/users/{userId}/events": {
       "get": {
         "description": "В случае, если по заданным фильтрам не найдено ни одного события, возвращает пустой список",
-        "operationId": "getEvents",
+        "operationId": "initiatorGetEvents",
         "parameters": [
           {
             "description": "id текущего пользователя",
@@ -1342,7 +1342,7 @@
       },
       "post": {
         "description": "Обратите внимание: дата и время на которые намечено событие не может быть раньше, чем через два часа от текущего момента",
-        "operationId": "addEvent",
+        "operationId": "initiatorAddEvent",
         "parameters": [
           {
             "description": "id текущего пользователя",
@@ -1419,7 +1419,7 @@
     "/users/{userId}/events/{eventId}": {
       "get": {
         "description": "В случае, если события с заданным id не найдено, возвращает статус код 404",
-        "operationId": "getEvent",
+        "operationId": "initiatorGetEvent",
         "parameters": [
           {
             "description": "id текущего пользователя",
@@ -1493,7 +1493,7 @@
       },
       "patch": {
         "description": "Обратите внимание:\n- изменить можно только отмененные события или события в состоянии ожидания модерации (Ожидается код ошибки 409)\n- дата и время на которые намечено событие не может быть раньше, чем через два часа от текущего момента (Ожидается код ошибки 409)\n",
-        "operationId": "updateEvent",
+        "operationId": "initiatorUpdateEvent",
         "parameters": [
           {
             "description": "id текущего пользователя",
@@ -1596,7 +1596,7 @@
     "/users/{userId}/events/{eventId}/requests": {
       "get": {
         "description": "В случае, если по заданным фильтрам не найдено ни одной заявки, возвращает пустой список",
-        "operationId": "getEventParticipants",
+        "operationId": "initiatorGetEventRequests",
         "parameters": [
           {
             "description": "id текущего пользователя",
@@ -1657,7 +1657,7 @@
       },
       "patch": {
         "description": "Обратите внимание:\n- если для события лимит заявок равен 0 или отключена пре-модерация заявок, то подтверждение заявок не требуется\n- нельзя подтвердить заявку, если уже достигнут лимит по заявкам на данное событие (Ожидается код ошибки 409)\n- статус можно изменить только у заявок, находящихся в состоянии ожидания (Ожидается код ошибки 409)\n- если при подтверждении данной заявки, лимит заявок для события исчерпан, то все неподтверждённые заявки необходимо отклонить",
-        "operationId": "changeRequestStatus",
+        "operationId": "initiatorChangeRequestStatus",
         "parameters": [
           {
             "description": "id текущего пользователя",
@@ -1760,7 +1760,7 @@
     "/users/{userId}/requests": {
       "get": {
         "description": "В случае, если по заданным фильтрам не найдено ни одной заявки, возвращает пустой список",
-        "operationId": "getUserRequests",
+        "operationId": "participantGetRequests",
         "parameters": [
           {
             "description": "id текущего пользователя",
@@ -1827,7 +1827,7 @@
       },
       "post": {
         "description": "Обратите внимание:\n- нельзя добавить повторный запрос  (Ожидается код ошибки 409)\n- инициатор события не может добавить запрос на участие в своём событии (Ожидается код ошибки 409)\n- нельзя участвовать в неопубликованном событии (Ожидается код ошибки 409)\n- если у события достигнут лимит запросов на участие - необходимо вернуть ошибку  (Ожидается код ошибки 409)\n- если для события отключена пре-модерация запросов на участие, то запрос должен автоматически перейти в состояние подтвержденного",
-        "operationId": "addParticipationRequest",
+        "operationId": "participantAddRequest",
         "parameters": [
           {
             "description": "id текущего пользователя",
@@ -1918,7 +1918,7 @@
     },
     "/users/{userId}/requests/{requestId}/cancel": {
       "patch": {
-        "operationId": "cancelRequest",
+        "operationId": "participantCancelRequest",
         "parameters": [
           {
             "description": "id текущего пользователя",
