@@ -3,7 +3,7 @@
 		"_postman_id": "1b12f39d-a514-42d9-99a1-2d2f4026b8e8",
 		"name": "\"Explore with me\" API статистика",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "13708500"
+		"_exporter_id": "23073145"
 	},
 	"item": [
 		{
@@ -489,7 +489,7 @@
 			"response": []
 		},
 		{
-			"name": "Получение статистики по посещениям. (Тест на опциональность параметра uris)",
+			"name": "Получение статистики по посещениям. (Тест на опциональность и работу параметра uris)",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -500,25 +500,28 @@
 							"    const rnd = new RandomUtils();\r",
 							"\r",
 							"    try {    \r",
-							"        pm.collectionVariables.set(\"uri\", '/events');  \r",
-							"        \r",
+							"        pm.collectionVariables.set(\"uri\", '/events');\r",
+							"        const user = await api.addUser(rnd.getUser());\r",
+							"        const category = await api.addCategory(rnd.getCategory());\r",
+							"        let event = await api.addEvent(user.id, rnd.getEvent(category.id));\r",
+							"        event = await api.publishEvent(event.id);\r",
 							"        pm.sendRequest({\r",
 							"            url : \"http://localhost:8080/events\",\r",
 							"            method : \"GET\",\r",
 							"            header: { \"Content-Type\": \"application/json\" }\r",
 							"        }, (error, response) => {\r",
-							"            \r",
-							"            pm.sendRequest({\r",
-							"                url : \"http://localhost:9090/stats?start=2020-05-05 00:00:00&end=2035-05-05 00:00:00&unique=false\",\r",
-							"                method : \"GET\",\r",
-							"                header: { \"Content-Type\": \"application/json\" }\r",
-							"            }, (error, response) => {\r",
-							"                pm.collectionVariables.set('source', response.json());\r",
 							"                pm.sendRequest({\r",
-							"                    url : \"http://localhost:8080/events\",\r",
+							"                    url : \"http://localhost:8080/events/\" + event.id,\r",
 							"                    method : \"GET\",\r",
 							"                    header: { \"Content-Type\": \"application/json\" }\r",
-							"                });\r",
+							"                }, (error, response) => {\r",
+							"                    pm.sendRequest({\r",
+							"                        url : \"http://localhost:9090/stats?start=2020-05-05 00:00:00&end=2035-05-05 00:00:00&unique=false\",\r",
+							"                        method : \"GET\",\r",
+							"                        header: { \"Content-Type\": \"application/json\" }\r",
+							"                    }, (error, response)=>{ \r",
+							"                        pm.collectionVariables.set('source', response.json());\r",
+							"                    });\r",
 							"            });\r",
 							"        });\r",
 							"        \r",
@@ -555,136 +558,22 @@
 							"    pm.response.to.be.json;\r",
 							"});\r",
 							"\r",
-							"const target = pm.response.json()[0];\r",
-							"\r",
+							"const target = pm.response.json();\r",
+							"const source = pm.collectionVariables.get('source');\r",
+							"console.log(target)\r",
+							"console.log(source)\r",
 							"pm.test(\"Посты должны содержать поля: app, uri, hits\", function () {\r",
-							"    pm.expect(target).to.have.all.keys('app', 'uri', 'hits');\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json"
-					}
-				],
-				"url": {
-					"raw": "{{baseUrl}}/stats?start=2020-05-05 00:00:00&end=2023-05-05 00:00:00&unique=false",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"stats"
-					],
-					"query": [
-						{
-							"key": "start",
-							"value": "2020-05-05 00:00:00",
-							"description": "(Required) Дата и время начала диапазона за который нужно выгрузить статистику (в формате \"yyyy-MM-dd HH:mm:ss\")"
-						},
-						{
-							"key": "end",
-							"value": "2023-05-05 00:00:00",
-							"description": "(Required) Дата и время конца диапазона за который нужно выгрузить статистику (в формате \"yyyy-MM-dd HH:mm:ss\")"
-						},
-						{
-							"key": "uris",
-							"value": "{{uri}}",
-							"description": "Список uri для которых нужно выгрузить статистику",
-							"disabled": true
-						},
-						{
-							"key": "uris",
-							"value": "aliqua o",
-							"description": "Список uri для которых нужно выгрузить статистику",
-							"disabled": true
-						},
-						{
-							"key": "unique",
-							"value": "false",
-							"description": "Нужно ли учитывать только уникальные посещения (только с уникальным ip)"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Получение статистики по посещениям. (Тест на опциональность параметра unique)",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"const main = async () => {\r",
-							"    const api = new API(pm);\r",
-							"    const rnd = new RandomUtils();\r",
-							"\r",
-							"    try {    \r",
-							"        pm.collectionVariables.set(\"uri\", '/events');  \r",
-							"        \r",
-							"        pm.sendRequest({\r",
-							"            url : \"http://localhost:8080/events\",\r",
-							"            method : \"GET\",\r",
-							"            header: { \"Content-Type\": \"application/json\" }\r",
-							"        }, (error, response) => {\r",
-							"            \r",
-							"            pm.sendRequest({\r",
-							"                url : \"http://localhost:9090/stats?start=2020-05-05 00:00:00&end=2035-05-05 00:00:00&uris=/events\",\r",
-							"                method : \"GET\",\r",
-							"                header: { \"Content-Type\": \"application/json\" }\r",
-							"            }, (error, response) => {\r",
-							"                pm.collectionVariables.set('source', response.json());\r",
-							"                pm.sendRequest({\r",
-							"                    url : \"http://localhost:8080/events\",\r",
-							"                    method : \"GET\",\r",
-							"                    header: { \"Content-Type\": \"application/json\" }\r",
-							"                });\r",
-							"            });\r",
-							"        });\r",
-							"        \r",
-							"    } catch(err) {\r",
-							"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
-							"    }\r",
-							"};\r",
-							"\r",
-							"const interval = setInterval(() => {}, 1000);\r",
-							"\r",
-							"setTimeout(async () => \r",
-							"    {\r",
-							"        try {\r",
-							"            await main();\r",
-							"        } catch (e) {\r",
-							"            console.error(e);\r",
-							"        } finally {\r",
-							"            clearInterval(interval);\r",
-							"        }\r",
-							"    },  \r",
-							"    100 \r",
-							");"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json при запросе без опционального параметра unique\", function () {\r",
-							"    pm.response.to.be.ok;    \r",
-							"    pm.response.to.be.withBody;\r",
-							"    pm.response.to.be.json;\r",
+							"    pm.expect(target[0]).to.have.all.keys('app', 'uri', 'hits');\r",
+							"    pm.expect(source[0]).to.have.all.keys('app', 'uri', 'hits');\r",
+							"    pm.expect(source[1]).to.have.all.keys('app', 'uri', 'hits');\r",
 							"});\r",
 							"\r",
-							"const target = pm.response.json()[0];\r",
+							"pm.test(\"При запросе по конкретному uris должны получить 1 запись\", function () {\r",
+							"    pm.expect(target.length).to.equal(1);\r",
+							"});\r",
 							"\r",
-							"pm.test(\"Посты должны содержать поля: app, uri, hits\", function () {\r",
-							"    pm.expect(target).to.have.all.keys('app', 'uri', 'hits');\r",
+							"pm.test(\"При запросе без uris должны получить больше 1 записи\", function () {\r",
+							"    pm.expect(source.length).to.be.above(1);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -700,7 +589,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{baseUrl}}/stats?start=2020-05-05 00:00:00&end=2023-05-05 00:00:00&uris={{uri}}",
+					"raw": "{{baseUrl}}/stats?start=2020-05-05 00:00:00&end=2023-05-05 00:00:00&uris={{uri}}&unique=false",
 					"host": [
 						"{{baseUrl}}"
 					],
@@ -731,9 +620,8 @@
 						},
 						{
 							"key": "unique",
-							"value": "true",
-							"description": "Нужно ли учитывать только уникальные посещения (только с уникальным ip)",
-							"disabled": true
+							"value": "false",
+							"description": "Нужно ли учитывать только уникальные посещения (только с уникальным ip)"
 						}
 					]
 				}
@@ -741,7 +629,7 @@
 			"response": []
 		},
 		{
-			"name": "Получение статистики по посещениям. (Тест на работу параметра unique)",
+			"name": "Получение статистики по посещениям. (Тест на опциональность и работу параметра unique)",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -816,8 +704,11 @@
 							"const source = pm.collectionVariables.get(\"source\")[0];\r",
 							"\r",
 							"pm.test(\"Количество уникальных просмотров с одного ip должно равняться 1\", function () {\r",
-							"    pm.expect(target.hits > 1);\r",
 							"    pm.expect(source.hits == 1);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Количество просмотров с одного ip должно быть больше 1\", function () {\r",
+							"    pm.expect(target.hits > 1);\r",
 							"})"
 						],
 						"type": "text/javascript"
