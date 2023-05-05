@@ -455,7 +455,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{baseUrl}}/stats?start=2020-05-05 00:00:00&end=2023-05-05 00:00:00&uris={{uri}}&unique=false",
+					"raw": "{{baseUrl}}/stats?start=2020-05-05 00:00:00&end=2035-05-05 00:00:00&uris={{uri}}&unique=false",
 					"host": [
 						"{{baseUrl}}"
 					],
@@ -470,7 +470,7 @@
 						},
 						{
 							"key": "end",
-							"value": "2023-05-05 00:00:00",
+							"value": "2035-05-05 00:00:00",
 							"description": "(Required) Дата и время конца диапазона за который нужно выгрузить статистику (в формате \"yyyy-MM-dd HH:mm:ss\")"
 						},
 						{
@@ -574,7 +574,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{baseUrl}}/stats?start=2020-05-05 00:00:00&end=2023-05-05 00:00:00&unique=false",
+					"raw": "{{baseUrl}}/stats?start=2020-05-05 00:00:00&end=2035-05-05 00:00:00&unique=false",
 					"host": [
 						"{{baseUrl}}"
 					],
@@ -589,7 +589,7 @@
 						},
 						{
 							"key": "end",
-							"value": "2023-05-05 00:00:00",
+							"value": "2035-05-05 00:00:00",
 							"description": "(Required) Дата и время конца диапазона за который нужно выгрузить статистику (в формате \"yyyy-MM-dd HH:mm:ss\")"
 						},
 						{
@@ -700,7 +700,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{baseUrl}}/stats?start=2020-05-05 00:00:00&end=2023-05-05 00:00:00&uris={{uri}}",
+					"raw": "{{baseUrl}}/stats?start=2020-05-05 00:00:00&end=2035-05-05 00:00:00&uris={{uri}}",
 					"host": [
 						"{{baseUrl}}"
 					],
@@ -715,7 +715,7 @@
 						},
 						{
 							"key": "end",
-							"value": "2023-05-05 00:00:00",
+							"value": "2035-05-05 00:00:00",
 							"description": "(Required) Дата и время конца диапазона за который нужно выгрузить статистику (в формате \"yyyy-MM-dd HH:mm:ss\")"
 						},
 						{
@@ -833,7 +833,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{baseUrl}}/stats?start=2020-05-05 00:00:00&end=2023-05-05 00:00:00&uris={{uri}}&unique=false",
+					"raw": "{{baseUrl}}/stats?start=2020-05-05 00:00:00&end=2035-05-05 00:00:00&uris={{uri}}&unique=false",
 					"host": [
 						"{{baseUrl}}"
 					],
@@ -848,7 +848,7 @@
 						},
 						{
 							"key": "end",
-							"value": "2023-05-05 00:00:00",
+							"value": "2035-05-05 00:00:00",
 							"description": "(Required) Дата и время конца диапазона за который нужно выгрузить статистику (в формате \"yyyy-MM-dd HH:mm:ss\")"
 						},
 						{
