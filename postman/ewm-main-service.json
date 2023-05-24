@@ -3,8 +3,8 @@
 		"_postman_id": "4f622f31-328a-4506-95bd-66359cfbe749",
 		"name": "Test Explore With Me - Main service",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23073145",
-		"_collection_link": "https://universal-shadow-295426.postman.co/workspace/My-Workspace~4200f6aa-0504-44b1-8a1d-707d0dcbd5ce/collection/13708500-4f622f31-328a-4506-95bd-66359cfbe749?action=share&creator=23073145&source=collection_link"
+		"_exporter_id": "13708500",
+		"_collection_link": "https://universal-shadow-295426.postman.co/workspace/My-Workspace~4200f6aa-0504-44b1-8a1d-707d0dcbd5ce/collection/13708500-4f622f31-328a-4506-95bd-66359cfbe749?action=share&creator=13708500&source=collection_link"
 	},
 	"item": [
 		{
@@ -1393,13 +1393,7 @@
 													"    const rnd = new RandomUtils();\r",
 													"\r",
 													"    try {\r",
-													"        const user = await api.addUser(rnd.getUser());\r",
-													"        const category = await api.addCategory(rnd.getCategory());\r",
-													"        let event = await api.addEvent(user.id, rnd.getEvent(category.id));\r",
-													"        event = await api.publishEvent(event.id);\r",
-													"        pm.request.removeQueryParams(['text', 'categories', 'paid']);\r",
-													"        pm.request.addQueryParams([`text=` + event.annotation, 'categories=' + category.id, 'paid=' + event.paid]);\r",
-													"        pm.collectionVariables.set('response', event);\r",
+													"        \r",
 													"    } catch(err) {\r",
 													"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
 													"    }\r",
@@ -1428,7 +1422,7 @@
 											"listen": "test",
 											"script": {
 												"exec": [
-													"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {\r",
+													"pm.test(\"Ответ должен содержать код статуса 400 и данные в формате json\", function () {\r",
 													"    pm.response.to.be.badRequest;    \r",
 													"    pm.response.to.be.withBody;\r",
 													"    pm.response.to.be.json;\r",
@@ -2073,7 +2067,7 @@
 													"        pm.collectionVariables.set(\"uid\", user.id)\r",
 													"        const category = await api.addCategory(rnd.getCategory());\r",
 													"        event = rnd.getEvent(category.id);\r",
-													"        event.description = event.description[0].repeat(19);\r",
+													"        event.description = rnd.getWord(19);\r",
 													"    } catch(err) {\r",
 													"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
 													"    }\r",
@@ -2162,7 +2156,7 @@
 									"response": []
 								},
 								{
-									"name": "Добавление нового события с description.length < 20 Copy",
+									"name": "Добавление нового события с description.length < 20",
 									"event": [
 										{
 											"listen": "prerequest",
@@ -2178,7 +2172,7 @@
 													"        pm.collectionVariables.set(\"uid\", user.id)\r",
 													"        const category = await api.addCategory(rnd.getCategory());\r",
 													"        event = rnd.getEvent(category.id);\r",
-													"        event.description = event.description[0].repeat(19);\r",
+													"        event.description = rnd.getWord(19);\r",
 													"    } catch(err) {\r",
 													"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
 													"    }\r",
@@ -2283,7 +2277,7 @@
 													"        pm.collectionVariables.set(\"uid\", user.id)\r",
 													"        const category = await api.addCategory(rnd.getCategory());\r",
 													"        event = rnd.getEvent(category.id);\r",
-													"        event.annotation = event.annotation[0].repeat(19);\r",
+													"        event.annotation = rnd.getWord(19);\r",
 													"    } catch(err) {\r",
 													"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
 													"    }\r",
@@ -2388,7 +2382,7 @@
 													"        pm.collectionVariables.set(\"uid\", user.id)\r",
 													"        const category = await api.addCategory(rnd.getCategory());\r",
 													"        event = rnd.getEvent(category.id);\r",
-													"        event.annotation = event.annotation[0].repeat(2001);\r",
+													"        event.annotation = rnd.getWord(2001);\r",
 													"    } catch(err) {\r",
 													"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
 													"    }\r",
@@ -2477,7 +2471,7 @@
 									"response": []
 								},
 								{
-									"name": "Добавление нового события с description.length == 20 && annotation.length == 20",
+									"name": "Добавление нового события с description.length == 20 && annotation.length == 20 && title.length == 3",
 									"event": [
 										{
 											"listen": "prerequest",
@@ -2493,8 +2487,9 @@
 													"        pm.collectionVariables.set(\"uid\", user.id)\r",
 													"        const category = await api.addCategory(rnd.getCategory());\r",
 													"        event = rnd.getEvent(category.id);\r",
-													"        event.description = event.description[0].repeat(20);\r",
-													"        event.annotation = event.annotation[0].repeat(20);\r",
+													"        event.description = rnd.getWord(20);\r",
+													"        event.annotation = rnd.getWord(20);\r",
+													"        event.title = rnd.getWord(3);\r",
 													"    } catch(err) {\r",
 													"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
 													"    }\r",
@@ -2583,7 +2578,7 @@
 									"response": []
 								},
 								{
-									"name": "Добавление нового события с description.length == 7000 && annotation.length == 2000 Copy",
+									"name": "Добавление нового события с description.length == 7000 && annotation.length == 2000 && title.length == 120",
 									"event": [
 										{
 											"listen": "prerequest",
@@ -2599,8 +2594,9 @@
 													"        pm.collectionVariables.set(\"uid\", user.id)\r",
 													"        const category = await api.addCategory(rnd.getCategory());\r",
 													"        event = rnd.getEvent(category.id);\r",
-													"        event.description = event.description[0].repeat(7000);\r",
-													"        event.annotation = event.annotation[0].repeat(2000);\r",
+													"        event.description = rnd.getWord(7000);\r",
+													"        event.annotation = rnd.getWord(2000);\r",
+													"        event.title = rnd.getWord(120);\r",
 													"    } catch(err) {\r",
 													"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
 													"    }\r",
@@ -2685,6 +2681,408 @@
 											]
 										},
 										"description": "Обратите внимание: дата и время на которые намечено событие не может быть раньше, чем через два часа от текущего момента"
+									},
+									"response": []
+								},
+								{
+									"name": "Добавление нового события с title.length < 3",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"const main = async () => {\r",
+													"    const api = new API(pm);\r",
+													"    const rnd = new RandomUtils();\r",
+													"\r",
+													"    let event;\r",
+													"    try {\r",
+													"        const user = await api.addUser(rnd.getUser());\r",
+													"        pm.collectionVariables.set(\"uid\", user.id)\r",
+													"        const category = await api.addCategory(rnd.getCategory());\r",
+													"        event = rnd.getEvent(category.id);\r",
+													"        event.title = rnd.getWord(2);\r",
+													"    } catch(err) {\r",
+													"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
+													"    }\r",
+													"\r",
+													"    pm.request.body.update({\r",
+													"        mode: 'raw',\r",
+													"        raw: JSON.stringify(event),\r",
+													"        options: { raw: { language: 'json' } }\r",
+													"    });\r",
+													"};\r",
+													"\r",
+													"const interval = setInterval(() => {}, 1000);\r",
+													"\r",
+													"setTimeout(async () => \r",
+													"    {\r",
+													"        try {\r",
+													"            await main();\r",
+													"        } catch (e) {\r",
+													"            console.error(e);\r",
+													"        } finally {\r",
+													"            clearInterval(interval);\r",
+													"        }\r",
+													"    },  \r",
+													"    100 \r",
+													");"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Ответ должен содержать код статуса 400 и данные в формате json\", function () {\r",
+													"    pm.response.to.be.badRequest;    \r",
+													"    pm.response.to.be.withBody;\r",
+													"    pm.response.to.be.json;\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{request_body}}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users/:userId/events",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":userId",
+												"events"
+											],
+											"variable": [
+												{
+													"key": "userId",
+													"value": "{{uid}}",
+													"description": "(Required) id текущего пользователя"
+												}
+											]
+										},
+										"description": "Обратите внимание: дата и время на которые намечено событие не может быть раньше, чем через два часа от текущего момента"
+									},
+									"response": []
+								},
+								{
+									"name": "Добавление нового события с title.length > 120",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"const main = async () => {\r",
+													"    const api = new API(pm);\r",
+													"    const rnd = new RandomUtils();\r",
+													"\r",
+													"    let event;\r",
+													"    try {\r",
+													"        const user = await api.addUser(rnd.getUser());\r",
+													"        pm.collectionVariables.set(\"uid\", user.id)\r",
+													"        const category = await api.addCategory(rnd.getCategory());\r",
+													"        event = rnd.getEvent(category.id);\r",
+													"        event.title = rnd.getWord(121);\r",
+													"    } catch(err) {\r",
+													"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
+													"    }\r",
+													"\r",
+													"    pm.request.body.update({\r",
+													"        mode: 'raw',\r",
+													"        raw: JSON.stringify(event),\r",
+													"        options: { raw: { language: 'json' } }\r",
+													"    });\r",
+													"};\r",
+													"\r",
+													"const interval = setInterval(() => {}, 1000);\r",
+													"\r",
+													"setTimeout(async () => \r",
+													"    {\r",
+													"        try {\r",
+													"            await main();\r",
+													"        } catch (e) {\r",
+													"            console.error(e);\r",
+													"        } finally {\r",
+													"            clearInterval(interval);\r",
+													"        }\r",
+													"    },  \r",
+													"    100 \r",
+													");"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Ответ должен содержать код статуса 400 и данные в формате json\", function () {\r",
+													"    pm.response.to.be.badRequest;    \r",
+													"    pm.response.to.be.withBody;\r",
+													"    pm.response.to.be.json;\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{request_body}}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users/:userId/events",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":userId",
+												"events"
+											],
+											"variable": [
+												{
+													"key": "userId",
+													"value": "{{uid}}",
+													"description": "(Required) id текущего пользователя"
+												}
+											]
+										},
+										"description": "Обратите внимание: дата и время на которые намечено событие не может быть раньше, чем через два часа от текущего момента"
+									},
+									"response": []
+								},
+								{
+									"name": "Изменение заголовка события с  title.length ＜ 3 (admin endpoint)",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"const main = async () => {\r",
+													"    const api = new API(pm);\r",
+													"    const rnd = new RandomUtils();\r",
+													"\r",
+													"    try {\r",
+													"        const user = await api.addUser(rnd.getUser());\r",
+													"        const category = await api.addCategory(rnd.getCategory());\r",
+													"        let event = await api.addEvent(user.id, rnd.getEvent(category.id));\r",
+													"        let event2 = rnd.getEvent(category.id)\r",
+													"        event2.title = rnd.getWord(2);\r",
+													"        pm.collectionVariables.set(\"eid\", event.id)\r",
+													"        pm.request.body.update({\r",
+													"            mode: 'raw',\r",
+													"            raw: event2,\r",
+													"            options: { raw: { language: 'json' } }\r",
+													"        });\r",
+													"    } catch(err) {\r",
+													"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
+													"    }\r",
+													"};\r",
+													"\r",
+													"const interval = setInterval(() => {}, 1000);\r",
+													"\r",
+													"setTimeout(async () => \r",
+													"    {\r",
+													"        try {\r",
+													"            // выполняем наш скрипт\r",
+													"            await main();\r",
+													"        } catch (e) {\r",
+													"            console.error(e);\r",
+													"        } finally {\r",
+													"            clearInterval(interval);\r",
+													"        }\r",
+													"    },  \r",
+													"    100 \r",
+													");"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Ответ должен содержать код статуса 400 и данные в формате json\", function () {\r",
+													"    pm.response.to.be.badRequest;    \r",
+													"    pm.response.to.be.withBody;\r",
+													"    pm.response.to.be.json;\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{request_body}}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/admin/events/:eventId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"events",
+												":eventId"
+											],
+											"variable": [
+												{
+													"key": "eventId",
+													"value": "{{eid}}",
+													"description": "(Required) id события"
+												}
+											]
+										},
+										"description": "Обратите внимание:\n - дата начала события должна быть не ранее чем за час от даты публикации.\n- событие должно быть в состоянии ожидания публикации"
+									},
+									"response": []
+								},
+								{
+									"name": "Изменение заголовка события с  title.length > 120 (admin endpoint)",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"const main = async () => {\r",
+													"    const api = new API(pm);\r",
+													"    const rnd = new RandomUtils();\r",
+													"\r",
+													"    try {\r",
+													"        const user = await api.addUser(rnd.getUser());\r",
+													"        const category = await api.addCategory(rnd.getCategory());\r",
+													"        let event = await api.addEvent(user.id, rnd.getEvent(category.id));\r",
+													"        let event2 = rnd.getEvent(category.id)\r",
+													"        event2.title = rnd.getWord(121);\r",
+													"        pm.collectionVariables.set(\"eid\", event.id)\r",
+													"        pm.request.body.update({\r",
+													"            mode: 'raw',\r",
+													"            raw: event2,\r",
+													"            options: { raw: { language: 'json' } }\r",
+													"        });\r",
+													"    } catch(err) {\r",
+													"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
+													"    }\r",
+													"};\r",
+													"\r",
+													"const interval = setInterval(() => {}, 1000);\r",
+													"\r",
+													"setTimeout(async () => \r",
+													"    {\r",
+													"        try {\r",
+													"            // выполняем наш скрипт\r",
+													"            await main();\r",
+													"        } catch (e) {\r",
+													"            console.error(e);\r",
+													"        } finally {\r",
+													"            clearInterval(interval);\r",
+													"        }\r",
+													"    },  \r",
+													"    100 \r",
+													");"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Ответ должен содержать код статуса 400 и данные в формате json\", function () {\r",
+													"    pm.response.to.be.badRequest;    \r",
+													"    pm.response.to.be.withBody;\r",
+													"    pm.response.to.be.json;\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{request_body}}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/admin/events/:eventId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"events",
+												":eventId"
+											],
+											"variable": [
+												{
+													"key": "eventId",
+													"value": "{{eid}}",
+													"description": "(Required) id события"
+												}
+											]
+										},
+										"description": "Обратите внимание:\n - дата начала события должна быть не ранее чем за час от даты публикации.\n- событие должно быть в состоянии ожидания публикации"
 									},
 									"response": []
 								},
@@ -2704,7 +3102,7 @@
 													"        const category = await api.addCategory(rnd.getCategory());\r",
 													"        let event = await api.addEvent(user.id, rnd.getEvent(category.id));\r",
 													"        let event2 = rnd.getEvent(category.id)\r",
-													"        event2.description = event2.description[0].repeat(19);\r",
+													"        event2.description = rnd.getWord(19);\r",
 													"        pm.collectionVariables.set(\"eid\", event.id)\r",
 													"        pm.request.body.update({\r",
 													"            mode: 'raw',\r",
@@ -2800,7 +3198,7 @@
 													"        const category = await api.addCategory(rnd.getCategory());\r",
 													"        let event = await api.addEvent(user.id, rnd.getEvent(category.id));\r",
 													"        let event2 = rnd.getEvent(category.id)\r",
-													"        event2.description = event2.description[0].repeat(7001);\r",
+													"        event2.description = rnd.getWord(7001);\r",
 													"        pm.collectionVariables.set(\"eid\", event.id)\r",
 													"        pm.request.body.update({\r",
 													"            mode: 'raw',\r",
@@ -2896,7 +3294,7 @@
 													"        const category = await api.addCategory(rnd.getCategory());\r",
 													"        let event = await api.addEvent(user.id, rnd.getEvent(category.id));\r",
 													"        let event2 = rnd.getEvent(category.id)\r",
-													"        event2.annotation = event2.annotation[0].repeat(19);\r",
+													"        event2.annotation = rnd.getWord(19);\r",
 													"        pm.collectionVariables.set(\"eid\", event.id)\r",
 													"        pm.request.body.update({\r",
 													"            mode: 'raw',\r",
@@ -2992,7 +3390,7 @@
 													"        const category = await api.addCategory(rnd.getCategory());\r",
 													"        let event = await api.addEvent(user.id, rnd.getEvent(category.id));\r",
 													"        let event2 = rnd.getEvent(category.id)\r",
-													"        event2.annotation = event2.annotation[0].repeat(2001);\r",
+													"        event2.annotation = rnd.getWord(2001);\r",
 													"        pm.collectionVariables.set(\"eid\", event.id)\r",
 													"        pm.request.body.update({\r",
 													"            mode: 'raw',\r",
@@ -3073,7 +3471,7 @@
 									"response": []
 								},
 								{
-									"name": "Изменение события с description.length == 20 && annotation.length == 20 (admin endpoint)",
+									"name": "Изменение события с description.length == 20 && annotation.length == 20 && title.length == 3 (admin endpoint)",
 									"event": [
 										{
 											"listen": "prerequest",
@@ -3088,8 +3486,9 @@
 													"        const category = await api.addCategory(rnd.getCategory());\r",
 													"        let event = await api.addEvent(user.id, rnd.getEvent(category.id));\r",
 													"        let event2 = rnd.getEvent(category.id)\r",
-													"        event2.annotation = event2.annotation[0].repeat(20);\r",
-													"        event2.description = event2.description[0].repeat(20);\r",
+													"        event2.annotation = rnd.getWord(20);\r",
+													"        event2.description = rnd.getWord(20);\r",
+													"        event2.title = rnd.getWord(3);\r",
 													"        pm.collectionVariables.set(\"eid\", event.id)\r",
 													"        pm.request.body.update({\r",
 													"            mode: 'raw',\r",
@@ -3170,7 +3569,7 @@
 									"response": []
 								},
 								{
-									"name": "Изменение события с description.length == 7000 && annotation.length == 2000 (admin endpoint)",
+									"name": "Изменение события с description.length == 7000 && annotation.length == 2000 && title.length == 120 (admin endpoint)",
 									"event": [
 										{
 											"listen": "prerequest",
@@ -3185,8 +3584,9 @@
 													"        const category = await api.addCategory(rnd.getCategory());\r",
 													"        let event = await api.addEvent(user.id, rnd.getEvent(category.id));\r",
 													"        let event2 = rnd.getEvent(category.id)\r",
-													"        event2.annotation = event2.annotation[0].repeat(2000);\r",
-													"        event2.description = event2.description[0].repeat(7000);\r",
+													"        event2.annotation = rnd.getWord(2000);\r",
+													"        event2.description = rnd.getWord(7000);\r",
+													"        event2.title = rnd.getWord(120);\r",
 													"        pm.collectionVariables.set(\"eid\", event.id)\r",
 													"        pm.request.body.update({\r",
 													"            mode: 'raw',\r",
@@ -3263,6 +3663,228 @@
 											]
 										},
 										"description": "Обратите внимание:\n - дата начала события должна быть не ранее чем за час от даты публикации.\n- событие должно быть в состоянии ожидания публикации"
+									},
+									"response": []
+								},
+								{
+									"name": "Изменение заголовка события с title.length < 3 (user endpoint)",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"const main = async () => {\r",
+													"    const api = new API(pm);\r",
+													"    const rnd = new RandomUtils();\r",
+													"\r",
+													"    try {\r",
+													"        const user = await api.addUser(rnd.getUser());\r",
+													"        const category = await api.addCategory(rnd.getCategory());\r",
+													"        const event = await api.addEvent(user.id, rnd.getEvent(category.id));\r",
+													"        pm.collectionVariables.set(\"uid\", user.id);\r",
+													"        pm.collectionVariables.set(\"eid\", event.id);\r",
+													"        pm.request.body.update({\r",
+													"            mode: 'raw',\r",
+													"            raw: JSON.stringify({\r",
+													"                title: rnd.getWord(2)\r",
+													"            }),\r",
+													"            options: { raw: { language: 'json' } }\r",
+													"        });\r",
+													"    } catch(err) {\r",
+													"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
+													"    }\r",
+													"};\r",
+													"\r",
+													"const interval = setInterval(() => {}, 1000);\r",
+													"\r",
+													"setTimeout(async () => \r",
+													"    {\r",
+													"        try {\r",
+													"            await main();\r",
+													"        } catch (e) {\r",
+													"            console.error(e);\r",
+													"        } finally {\r",
+													"            clearInterval(interval);\r",
+													"        }\r",
+													"    },  \r",
+													"    100 \r",
+													");"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Ответ должен содержать код статуса 400 и данные в формате json\", function () {\r",
+													"    pm.response.to.be.badRequest;    \r",
+													"    pm.response.to.be.withBody;\r",
+													"    pm.response.to.be.json;\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{request_body}}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users/:userId/events/:eventId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":userId",
+												"events",
+												":eventId"
+											],
+											"variable": [
+												{
+													"key": "userId",
+													"value": "{{uid}}",
+													"description": "(Required) id текущего пользователя"
+												},
+												{
+													"key": "eventId",
+													"value": "{{eid}}",
+													"description": "(Required) id отменяемого события"
+												}
+											]
+										},
+										"description": "Обратите внимание: Отменить можно только событие в состоянии ожидания модерации."
+									},
+									"response": []
+								},
+								{
+									"name": "Изменение заголовка события с title.length > 120 (user endpoint)",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"const main = async () => {\r",
+													"    const api = new API(pm);\r",
+													"    const rnd = new RandomUtils();\r",
+													"\r",
+													"    try {\r",
+													"        const user = await api.addUser(rnd.getUser());\r",
+													"        const category = await api.addCategory(rnd.getCategory());\r",
+													"        const event = await api.addEvent(user.id, rnd.getEvent(category.id));\r",
+													"        pm.collectionVariables.set(\"uid\", user.id);\r",
+													"        pm.collectionVariables.set(\"eid\", event.id);\r",
+													"        pm.request.body.update({\r",
+													"            mode: 'raw',\r",
+													"            raw: JSON.stringify({\r",
+													"                title: rnd.getWord(121)\r",
+													"            }),\r",
+													"            options: { raw: { language: 'json' } }\r",
+													"        });\r",
+													"    } catch(err) {\r",
+													"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
+													"    }\r",
+													"};\r",
+													"\r",
+													"const interval = setInterval(() => {}, 1000);\r",
+													"\r",
+													"setTimeout(async () => \r",
+													"    {\r",
+													"        try {\r",
+													"            await main();\r",
+													"        } catch (e) {\r",
+													"            console.error(e);\r",
+													"        } finally {\r",
+													"            clearInterval(interval);\r",
+													"        }\r",
+													"    },  \r",
+													"    100 \r",
+													");"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Ответ должен содержать код статуса 400 и данные в формате json\", function () {\r",
+													"    pm.response.to.be.badRequest;    \r",
+													"    pm.response.to.be.withBody;\r",
+													"    pm.response.to.be.json;\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{request_body}}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users/:userId/events/:eventId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":userId",
+												"events",
+												":eventId"
+											],
+											"variable": [
+												{
+													"key": "userId",
+													"value": "{{uid}}",
+													"description": "(Required) id текущего пользователя"
+												},
+												{
+													"key": "eventId",
+													"value": "{{eid}}",
+													"description": "(Required) id отменяемого события"
+												}
+											]
+										},
+										"description": "Обратите внимание: Отменить можно только событие в состоянии ожидания модерации."
 									},
 									"response": []
 								},
@@ -3286,7 +3908,7 @@
 													"        pm.request.body.update({\r",
 													"            mode: 'raw',\r",
 													"            raw: JSON.stringify({\r",
-													"                description: rnd.getEvent(category.id).description[0].repeat(19)\r",
+													"                description: rnd.getWord(19)\r",
 													"            }),\r",
 													"            options: { raw: { language: 'json' } }\r",
 													"        });\r",
@@ -3397,7 +4019,7 @@
 													"        pm.request.body.update({\r",
 													"            mode: 'raw',\r",
 													"            raw: JSON.stringify({\r",
-													"                description: rnd.getEvent(category.id).description[0].repeat(7001)\r",
+													"                description: rnd.getWord(7001)\r",
 													"            }),\r",
 													"            options: { raw: { language: 'json' } }\r",
 													"        });\r",
@@ -3508,7 +4130,7 @@
 													"        pm.request.body.update({\r",
 													"            mode: 'raw',\r",
 													"            raw: JSON.stringify({\r",
-													"                annotation: rnd.getEvent(category.id).annotation[0].repeat(19)\r",
+													"                annotation: rnd.getWord(19)\r",
 													"            }),\r",
 													"            options: { raw: { language: 'json' } }\r",
 													"        });\r",
@@ -3619,7 +4241,7 @@
 													"        pm.request.body.update({\r",
 													"            mode: 'raw',\r",
 													"            raw: JSON.stringify({\r",
-													"                annotation: rnd.getEvent(category.id).annotation[0].repeat(2001)\r",
+													"                annotation: rnd.getWord(2001)\r",
 													"            }),\r",
 													"            options: { raw: { language: 'json' } }\r",
 													"        });\r",
@@ -3711,7 +4333,7 @@
 									"response": []
 								},
 								{
-									"name": "Изменение события с description.length == 20 && annotation.length == 20 (user endpoint)",
+									"name": "Изменение события с description.length == 20 && annotation.length == 20 && title.length == 3 (user endpoint)",
 									"event": [
 										{
 											"listen": "prerequest",
@@ -3730,8 +4352,9 @@
 													"        pm.request.body.update({\r",
 													"            mode: 'raw',\r",
 													"            raw: JSON.stringify({\r",
-													"                description: rnd.getEvent(category.id).description[0].repeat(20),\r",
-													"                annotation: rnd.getEvent(category.id).annotation[0].repeat(20)\r",
+													"                description: rnd.getWord(20),\r",
+													"                annotation: rnd.getWord(20),\r",
+													"                title: rnd.getWord(3)\r",
 													"            }),\r",
 													"            options: { raw: { language: 'json' } }\r",
 													"        });\r",
@@ -3823,7 +4446,7 @@
 									"response": []
 								},
 								{
-									"name": "Изменение события с description.length == 7000 && annotation.length == 2000 (user endpoint)",
+									"name": "Изменение события с description.length == 7000 && annotation.length == 2000 && title.length == 120 (user endpoint)",
 									"event": [
 										{
 											"listen": "prerequest",
@@ -3842,8 +4465,9 @@
 													"        pm.request.body.update({\r",
 													"            mode: 'raw',\r",
 													"            raw: JSON.stringify({\r",
-													"                description: rnd.getEvent(category.id).description[0].repeat(7000),\r",
-													"                annotation: rnd.getEvent(category.id).annotation[0].repeat(2000)\r",
+													"                description: rnd.getWord(7000),\r",
+													"                annotation: rnd.getWord(2000),\r",
+													"                title: rnd.getWord(120)\r",
 													"            }),\r",
 													"            options: { raw: { language: 'json' } }\r",
 													"        });\r",
@@ -5778,7 +6402,7 @@
 													"    let user;\r",
 													"    try {\r",
 													"        user = rnd.getUser();\r",
-													"        user.email = rnd.getWord(1) + '@abc';\r",
+													"        user.email = rnd.getWord(1) + '@a.r';\r",
 													"    } catch(err) {\r",
 													"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
 													"    }\r",
@@ -5871,7 +6495,7 @@
 													"    let user;\r",
 													"    try {\r",
 													"        user = rnd.getUser();\r",
-													"        user.email = rnd.getWord(2) + '@abc';\r",
+													"        user.email = rnd.getWord(1) + '@a.ru';\r",
 													"    } catch(err) {\r",
 													"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
 													"    }\r",
@@ -6057,7 +6681,7 @@
 													"    let user;\r",
 													"    try {\r",
 													"        user = rnd.getUser();\r",
-													"        user.email = rnd.getWord(64) + '@a.ru';\r",
+													"        user.email = rnd.getWord(59) + '@a.ru';\r",
 													"    } catch(err) {\r",
 													"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
 													"    }\r",
@@ -6150,7 +6774,7 @@
 													"    let user;\r",
 													"    try {\r",
 													"        user = rnd.getUser();\r",
-													"        user.email = rnd.getWord(1) + '@' + rnd.getWord(64);\r",
+													"        user.email = rnd.getWord(1) + '@' + rnd.getWord(64) + '.ru';\r",
 													"    } catch(err) {\r",
 													"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
 													"    }\r",
@@ -6243,7 +6867,7 @@
 													"    let user;\r",
 													"    try {\r",
 													"        user = rnd.getUser();\r",
-													"        user.email = rnd.getWord(1) + '@' + rnd.getWord(63);\r",
+													"        user.email = rnd.getWord(1) + '@' + rnd.getWord(60) + '.ru';\r",
 													"    } catch(err) {\r",
 													"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
 													"    }\r",
@@ -7062,7 +7686,7 @@
 													"\r",
 													"    let category;\r",
 													"    try {\r",
-													"        category = {'name': rnd.getCategory().name[0].repeat(51)};\r",
+													"        category = {'name': rnd.getWord(51)};\r",
 													"    } catch(err) {\r",
 													"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
 													"    }\r",
@@ -7155,7 +7779,7 @@
 													"\r",
 													"    let category;\r",
 													"    try {\r",
-													"        category = {'name': rnd.getCategory().name[0].repeat(50)};\r",
+													"        category = {'name': rnd.getWord(50)};\r",
 													"    } catch(err) {\r",
 													"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
 													"    }\r",
@@ -7255,7 +7879,7 @@
 													"    pm.request.body.update({\r",
 													"        mode: 'raw',\r",
 													"        raw: JSON.stringify({\r",
-													"            name : rnd.getCategory().name[0].repeat(51)\r",
+													"            name : rnd.getWord(51)\r",
 													"        }),\r",
 													"        options: { raw: { language: 'json' } }\r",
 													"    });\r",
@@ -7341,7 +7965,7 @@
 													"    pm.request.body.update({\r",
 													"        mode: 'raw',\r",
 													"        raw: JSON.stringify({\r",
-													"            name : rnd.getCategory().name[0].repeat(50)\r",
+													"            name : rnd.getWord(50)\r",
 													"        }),\r",
 													"        options: { raw: { language: 'json' } }\r",
 													"    });\r",
@@ -8300,7 +8924,7 @@
 													"\r",
 													"    pm.request.body.update({\r",
 													"        mode: 'raw',\r",
-													"        raw: JSON.stringify({title: rnd.getCompilation().title[0].repeat(51)}),\r",
+													"        raw: JSON.stringify({title: rnd.getWord(51)}),\r",
 													"        options: { raw: { language: 'json' } }\r",
 													"    });\r",
 													"};\r",
@@ -8392,7 +9016,7 @@
 													"\r",
 													"    pm.request.body.update({\r",
 													"        mode: 'raw',\r",
-													"        raw: JSON.stringify({title: rnd.getCompilation().title[0].repeat(50)}),\r",
+													"        raw: JSON.stringify({title: rnd.getWord(50)}),\r",
 													"        options: { raw: { language: 'json' } }\r",
 													"    });\r",
 													"};\r",
@@ -8481,7 +9105,7 @@
 													"        pm.request.body.update({\r",
 													"            mode: 'raw',\r",
 													"            raw: JSON.stringify({\r",
-													"                title: rnd.getCompilation().title[0].repeat(51)\r",
+													"                title: rnd.getWord(51)\r",
 													"            }),\r",
 													"            options: { raw: { language: 'json' } }\r",
 													"        });\r",
@@ -8568,7 +9192,7 @@
 													"        pm.request.body.update({\r",
 													"            mode: 'raw',\r",
 													"            raw: JSON.stringify({\r",
-													"                title: rnd.getCompilation().title[0].repeat(50)\r",
+													"                title: rnd.getWord(50)\r",
 													"            }),\r",
 													"            options: { raw: { language: 'json' } }\r",
 													"        });\r",
@@ -10951,113 +11575,6 @@
 									"value": "10",
 									"description": "количество элементов в наборе",
 									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Поиск пользователей без параметра ids",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									"const main = async () => {\r",
-									"    const api = new API(pm);\r",
-									"    const rnd = new RandomUtils();\r",
-									"\r",
-									"    let compilation;\r",
-									"    try {\r",
-									"        await api.addUser(rnd.getUser());\r",
-									"        await api.addUser(rnd.getUser());\r",
-									"        await api.addUser(rnd.getUser());\r",
-									"        const user = await api.addUser(rnd.getUser());\r",
-									"        pm.collectionVariables.set(\"uid\", user.id)\r",
-									"    } catch(err) {\r",
-									"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
-									"    }\r",
-									"};\r",
-									"\r",
-									"const interval = setInterval(() => {}, 1000);\r",
-									"\r",
-									"setTimeout(async () => \r",
-									"    {\r",
-									"        try {\r",
-									"            await main();\r",
-									"        } catch (e) {\r",
-									"            console.error(e);\r",
-									"        } finally {\r",
-									"            clearInterval(interval);\r",
-									"        }\r",
-									"    },  \r",
-									"    100 \r",
-									");"
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {\r",
-									"    pm.response.to.be.ok;    \r",
-									"    pm.response.to.be.withBody;\r",
-									"    pm.response.to.be.json;\r",
-									"});\r",
-									"\r",
-									"const target = pm.response.json();\r",
-									"\r",
-									"pm.test(\"Пользователи должны содержать поля: id, name, email\", function () {\r",
-									"    pm.expect(target[0]).to.have.property('id');\r",
-									"    pm.expect(target[0]).to.have.property('name');\r",
-									"    pm.expect(target[0]).to.have.property('email');\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {\r",
-									"    pm.expect(target[target.length - 1].id).equal(pm.collectionVariables.get(\"uid\"));\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "{{baseUrl}}/admin/users?size=100000",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"admin",
-								"users"
-							],
-							"query": [
-								{
-									"key": "ids",
-									"value": "{{uid}}",
-									"description": "id пользователей",
-									"disabled": true
-								},
-								{
-									"key": "from",
-									"value": "0",
-									"description": "количество элементов, которые нужно пропустить для формирования текущего набора",
-									"disabled": true
-								},
-								{
-									"key": "size",
-									"value": "100000",
-									"description": "количество элементов в наборе"
 								}
 							]
 						}
