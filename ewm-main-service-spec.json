@@ -1,7 +1,8 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Main service API",
+    "description": "Documentation \"Explore With Me\" API v1.0",
+    "title": "\"Explore With Me\" API сервер",
     "version": "1.0"
   },
   "servers": [
@@ -479,6 +480,7 @@
             "name": "from",
             "required": false,
             "schema": {
+              "minimum": 0,
               "type": "integer",
               "format": "int32",
               "default": 0
@@ -634,6 +636,7 @@
             "name": "from",
             "required": false,
             "schema": {
+              "minimum": 0,
               "type": "integer",
               "format": "int32",
               "default": 0
@@ -803,6 +806,7 @@
             "name": "from",
             "required": false,
             "schema": {
+              "minimum": 0,
               "type": "integer",
               "format": "int32",
               "default": 0
@@ -943,6 +947,7 @@
             "name": "from",
             "required": false,
             "schema": {
+              "minimum": 0,
               "type": "integer",
               "format": "int32",
               "default": 0
@@ -1074,6 +1079,8 @@
             "name": "text",
             "required": false,
             "schema": {
+              "maxLength": 7000,
+              "minLength": 1,
               "type": "string"
             }
           },
@@ -1146,6 +1153,7 @@
             "name": "from",
             "required": false,
             "schema": {
+              "minimum": 0,
               "type": "integer",
               "format": "int32",
               "default": 0
@@ -1287,6 +1295,7 @@
             "name": "from",
             "required": false,
             "schema": {
+              "minimum": 0,
               "type": "integer",
               "format": "int32",
               "default": 0
@@ -2098,6 +2107,8 @@
             "example": 1
           },
           "name": {
+            "maxLength": 50,
+            "minLength": 1,
             "type": "string",
             "description": "Название категории",
             "example": "Концерты"
@@ -2441,6 +2452,8 @@
         "type": "object",
         "properties": {
           "name": {
+            "maxLength": 50,
+            "minLength": 1,
             "type": "string",
             "description": "Название категории",
             "example": "Концерты"
@@ -2476,6 +2489,8 @@
             "default": false
           },
           "title": {
+            "maxLength": 50,
+            "minLength": 1,
             "type": "string",
             "description": "Заголовок подборки",
             "example": "Летние концерты"
@@ -2559,11 +2574,15 @@
         "type": "object",
         "properties": {
           "email": {
+            "maxLength": 254,
+            "minLength": 6,
             "type": "string",
             "description": "Почтовый адрес",
             "example": "ivan.petrov@practicummail.ru"
           },
           "name": {
+            "maxLength": 250,
+            "minLength": 2,
             "type": "string",
             "description": "Имя",
             "example": "Иван Петров"
@@ -2624,6 +2643,8 @@
             "example": true
           },
           "title": {
+            "maxLength": 50,
+            "minLength": 1,
             "type": "string",
             "description": "Заголовок подборки",
             "example": "Необычные фотозоны"
