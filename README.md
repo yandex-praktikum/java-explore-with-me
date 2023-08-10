@@ -10,3 +10,7 @@
 ## Endpoints
 - [Техническое задание для API основного сервиса](./ewm-main-service-spec.json)
 - [Техническое задание для API сервиса статистики](./ewm-stats-service-spec.json)
+
+
+
+test1
