@@ -38,8 +38,7 @@ public class StatsController {
                                     @RequestParam(defaultValue = "false") Boolean unique) {
         if (unique) {
             return service.getUniqueStats(start, end, uris);
-        } else {
-            return service.getStats(start, end, uris);
         }
+        return service.getStats(start, end, uris);
     }
 }
