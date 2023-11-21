@@ -1,0 +1,59 @@
+server:
+  port: 9090
+
+spring:
+  output:
+    ansi:
+      enabled: always
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+    properties:
+      hibernate:
+        dialect=org:
+          hibernate:
+            dialect: PostgreSQL10Dialect
+        format_sql: true
+
+  sql:
+    init:
+      mode: always
+
+  datasource:
+    driverClassName=org:
+      postgresql: Driver
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:statistic}
+    username: ${POSTGRES_USER:admin}
+    password: ${POSTGRES_PASSWORD:sa}
+
+logging:
+  level:
+    org:
+      springframework:
+        orm:
+          jpa: INFO
+        transaction: INFO
+
+---
+logging:
+  level:
+    org:
+      springframework:
+        orm:
+          jpa:
+            JpaTransactionManager: DEBUG
+        transaction:
+          interceptor: TRACE
+
+---
+spring:
+  config:
+    activate:
+      on-profile: ci,test
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:statistic
+    username: ${POSTGRES_USER:test}
+    password: ${POSTGRES_PASSWORD:test}
