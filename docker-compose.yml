@@ -1,15 +1,30 @@
-version: '3.1'
+version: '3.8'
 services:
-  stats-server:
+
+  stats-service:
+    build: stats-service/
+    container_name: stats-service
+    depends_on:
+      - stats_db
     ports:
       - "9090:9090"
+      - "9091:9091"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats_db:5432/stats_db
+      - SPRING_DATASOURCE_USERNAME=test
+      - SPRING_DATASOURCE_PASSWORD=test
 
-  stats-db:
-    image: postgres:14-alpine
 
-  ewm-service:
+  stats_db:
+    container_name: stats_db
+    image: postgres
+    restart: always
     ports:
-      - "8080:8080"
-
-  ewm-db:
-    image: postgres:14-alpine
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: stats_db
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      PGDATA: /home/aleksandr/dev/stats_db
+    volumes:
+      - ./stats-service/schema.sql:/docker-entrypoint-initdb.d/schema.sql
