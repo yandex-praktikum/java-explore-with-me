@@ -3,8 +3,8 @@
 		"_postman_id": "4f622f31-328a-4506-95bd-66359cfbe749",
 		"name": "Test Explore With Me - Main service",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "13708500",
-		"_collection_link": "https://universal-shadow-295426.postman.co/workspace/My-Workspace~4200f6aa-0504-44b1-8a1d-707d0dcbd5ce/collection/13708500-4f622f31-328a-4506-95bd-66359cfbe749?action=share&creator=13708500&source=collection_link"
+		"_exporter_id": "23073145",
+		"_collection_link": "https://universal-shadow-295426.postman.co/workspace/My-Workspace~4200f6aa-0504-44b1-8a1d-707d0dcbd5ce/collection/13708500-4f622f31-328a-4506-95bd-66359cfbe749?action=share&source=collection_link&creator=23073145"
 	},
 	"item": [
 		{
@@ -572,7 +572,7 @@
 													"        pm.collectionVariables.set(\"uid\", user.id)\r",
 													"        const category = await api.addCategory(rnd.getCategory());\r",
 													"        event = rnd.getEvent(category.id);\r",
-													"        event[\"description\"] = '      ';\r",
+													"        event[\"description\"] = '                     ';\r",
 													"    } catch(err) {\r",
 													"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
 													"    }\r",
@@ -884,7 +884,7 @@
 													"        pm.collectionVariables.set(\"uid\", user.id)\r",
 													"        const category = await api.addCategory(rnd.getCategory());\r",
 													"        event = rnd.getEvent(category.id);\r",
-													"        event[\"annotation\"] = '      ';\r",
+													"        event[\"annotation\"] = '                     ';\r",
 													"    } catch(err) {\r",
 													"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
 													"    }\r",
@@ -970,6 +970,222 @@
 										"description": "Обратите внимание: дата и время на которые намечено событие не может быть раньше, чем через два часа от текущего момента"
 									},
 									"response": []
+								},
+								{
+									"name": "Добавление события с отрицательным лимитом участников",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"const main = async () => {\r",
+													"    const api = new API(pm);\r",
+													"    const rnd = new RandomUtils();\r",
+													"\r",
+													"    let event;\r",
+													"    try {\r",
+													"        const user = await api.addUser(rnd.getUser());\r",
+													"        pm.collectionVariables.set(\"uid\", user.id)\r",
+													"        const category = await api.addCategory(rnd.getCategory());\r",
+													"        event = rnd.getEvent(category.id);\r",
+													"        event[\"participantLimit\"] = -6;\r",
+													"    } catch(err) {\r",
+													"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
+													"    }\r",
+													"    pm.request.body.update({\r",
+													"        mode: 'raw',\r",
+													"        raw: JSON.stringify(event),\r",
+													"        options: { raw: { language: 'json' } }\r",
+													"    });\r",
+													"};\r",
+													"\r",
+													"const interval = setInterval(() => {}, 1000);\r",
+													"\r",
+													"setTimeout(async () => \r",
+													"    {\r",
+													"        try {\r",
+													"            await main();\r",
+													"        } catch (e) {\r",
+													"            console.error(e);\r",
+													"        } finally {\r",
+													"            clearInterval(interval);\r",
+													"        }\r",
+													"    },  \r",
+													"    100 \r",
+													");"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Ответ должен содержать код статуса 400 и данные в формате json\", function () {\r",
+													"    pm.response.to.be.badRequest;    \r",
+													"    pm.response.to.be.withBody;\r",
+													"    pm.response.to.be.json;\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{request_body}}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users/:userId/events",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":userId",
+												"events"
+											],
+											"variable": [
+												{
+													"key": "userId",
+													"value": "{{uid}}",
+													"description": "(Required) id текущего пользователя"
+												}
+											]
+										},
+										"description": "Обратите внимание: дата и время на которые намечено событие не может быть раньше, чем через два часа от текущего момента"
+									},
+									"response": []
+								},
+								{
+									"name": "Изменение события добавленного текущим пользователем. Изменение лимита участников на отрицательное значение",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"const main = async () => {\r",
+													"    const api = new API(pm);\r",
+													"    const rnd = new RandomUtils();\r",
+													"\r",
+													"    try {\r",
+													"        const user = await api.addUser(rnd.getUser());\r",
+													"        const category = await api.addCategory(rnd.getCategory());\r",
+													"        const event = await api.addEvent(user.id, rnd.getEvent(category.id));\r",
+													"        pm.collectionVariables.set(\"uid\", user.id);\r",
+													"        pm.collectionVariables.set(\"eid\", event.id);\r",
+													"        pm.collectionVariables.set(\"response\", event);\r",
+													"        pm.request.body.update({\r",
+													"            mode: 'raw',\r",
+													"            raw: JSON.stringify({\r",
+													"                participantLimit : -156\r",
+													"            }),\r",
+													"            options: { raw: { language: 'json' } }\r",
+													"        });\r",
+													"    } catch(err) {\r",
+													"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
+													"    }\r",
+													"};\r",
+													"\r",
+													"const interval = setInterval(() => {}, 1000);\r",
+													"\r",
+													"setTimeout(async () => \r",
+													"    {\r",
+													"        try {\r",
+													"            await main();\r",
+													"        } catch (e) {\r",
+													"            console.error(e);\r",
+													"        } finally {\r",
+													"            clearInterval(interval);\r",
+													"        }\r",
+													"    },  \r",
+													"    100 \r",
+													");"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Ответ должен содержать код статуса 400 и данные в формате json\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"    pm.response.to.be.withBody;\r",
+													"    pm.response.to.be.json;\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{request_body}}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users/:userId/events/:eventId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":userId",
+												"events",
+												":eventId"
+											],
+											"variable": [
+												{
+													"key": "userId",
+													"value": "{{uid}}",
+													"description": "(Required) id текущего пользователя"
+												},
+												{
+													"key": "eventId",
+													"value": "{{eid}}",
+													"description": "(Required) id отменяемого события"
+												}
+											]
+										},
+										"description": "Обратите внимание: Отменить можно только событие в состоянии ожидания модерации."
+									},
+									"response": []
 								}
 							]
 						},
@@ -992,7 +1208,7 @@
 													"        const user = await api.addUser(rnd.getUser());\r",
 													"        const category = await api.addCategory(rnd.getCategory());\r",
 													"        event = await api.addEvent(user.id, rnd.getEvent(category.id));\r",
-													"        pm.sendRequest({\r",
+													"        await pm.sendRequest({\r",
 													"            url : \"http://localhost:8080/admin/events/\" + event.id,\r",
 													"            method : \"PATCH\",\r",
 													"            header: { \"Content-Type\": \"application/json\" },\r",
@@ -1241,7 +1457,7 @@
 													"        pm.request.removeQueryParams(['users', 'categories']);\r",
 													"        pm.request.addQueryParams([`users=` + user.id, 'categories=' + category.id]);\r",
 													"        pm.collectionVariables.set('response', event);\r",
-													"        pm.sendRequest({\r",
+													"        await pm.sendRequest({\r",
 													"            url : \"http://localhost:8080/admin/events?users=\" + user.id +\"&states=PUBLISHED&categories=\" + category.id + \"&rangeStart=2022-01-06%2013%3A30%3A38&rangeEnd=2097-09-06%2013%3A30%3A38&from=0&size=1000\",\r",
 													"            method : \"GET\",\r",
 													"            header: { \"Content-Type\": \"application/json\" }\r",
@@ -4718,7 +4934,7 @@
 													"        for (let i = 0; i < 11; i++){\r",
 													"            await api.addEvent(user.id, eventArr[i]);\r",
 													"        }\r",
-													"        pm.sendRequest({\r",
+													"        await pm.sendRequest({\r",
 													"            url : \"http://localhost:8080/admin/events?from=0\",\r",
 													"            method : \"GET\",\r",
 													"            header: { \"Content-Type\": \"application/json\" }\r",
@@ -4860,7 +5076,7 @@
 													"        }\r",
 													"        pm.collectionVariables.set('responseArr', eventResponseArr)\r",
 													"        pm.collectionVariables.set(\"uid\", user.id)\r",
-													"        pm.sendRequest({\r",
+													"        await pm.sendRequest({\r",
 													"            url : \"http://localhost:8080/users/\" + user.id + \"/events?from=0\",\r",
 													"            method : \"GET\",\r",
 													"            header: { \"Content-Type\": \"application/json\" }\r",
@@ -5481,7 +5697,7 @@
 													"    let user;\r",
 													"    try {\r",
 													"        user = rnd.getUser();\r",
-													"        user.email = \"    \";\r",
+													"        user.email = \"       \";\r",
 													"    } catch(err) {\r",
 													"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
 													"    }\r",
@@ -7152,7 +7368,7 @@
 													"        for (let i = 0; i < 11; i++){\r",
 													"            await api.addUser(rnd.getUser());\r",
 													"        }\r",
-													"        pm.sendRequest({\r",
+													"        await pm.sendRequest({\r",
 													"            url : \"http://localhost:8080/admin/users?from=0\",\r",
 													"            method : \"GET\",\r",
 													"            header: { \"Content-Type\": \"application/json\" }\r",
@@ -8051,7 +8267,7 @@
 													"        for (let i = 0; i < 11; i++){\r",
 													"            await api.addCategory(rnd.getCategory());\r",
 													"        }\r",
-													"        pm.sendRequest({\r",
+													"        await pm.sendRequest({\r",
 													"            url : \"http://localhost:8080/categories?from=0\",\r",
 													"            method : \"GET\",\r",
 													"            header: { \"Content-Type\": \"application/json\" }\r",
@@ -8678,7 +8894,7 @@
 													"        const event2 = await api.addEvent(user.id, rnd.getEvent(category.id));\r",
 													"        compilation = rnd.getCompilation(event.id, event2.id);\r",
 													"        compilation2 = rnd.getCompilation(event.id, event2.id);\r",
-													"        pm.sendRequest({\r",
+													"        await pm.sendRequest({\r",
 													"            url : \"http://localhost:8080/admin/compilations/\",\r",
 													"            method : \"POST\",\r",
 													"            header: { \"Content-Type\": \"application/json\" },\r",
@@ -9387,7 +9603,7 @@
 													"        for (let i = 0; i < 11; i++){\r",
 													"            await api.addCompilation(rnd.getCompilation());\r",
 													"        }\r",
-													"        pm.sendRequest({\r",
+													"        await pm.sendRequest({\r",
 													"            url : \"http://localhost:8080/compilations?from=0\",\r",
 													"            method : \"GET\",\r",
 													"            header: { \"Content-Type\": \"application/json\" }\r",
@@ -9686,7 +9902,7 @@
 					"response": []
 				},
 				{
-					"name": "Добавление пользователя с занятым именем",
+					"name": "Добавление пользователя с занятым именем почты",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -9699,6 +9915,7 @@
 									"    let user;\r",
 									"    try {\r",
 									"        user = rnd.getUser();\r",
+									"        user.name = rnd.getWord(10);\r",
 									"        await api.addUser(user);\r",
 									"    } catch(err) {\r",
 									"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
@@ -11323,13 +11540,13 @@
 									"});\r",
 									"\r",
 									"pm.sendRequest({\r",
-									"            url: pm.collectionVariables.get(\"baseUrl\") + \"/categories/\" + catId,\r",
-									"            method: 'GET',\r",
-									"        }, (error, response) => {\r",
-									"            pm.test(\"Категория не должна быть найдена после удаления\", function () {\r",
-									"                pm.expect(response.code).to.eql(404);\r",
-									"            });\r",
-									"        });"
+									"        url: pm.collectionVariables.get(\"baseUrl\") + \"/categories/\" + catId,\r",
+									"        method: 'GET',\r",
+									"    }, (error, response) => {\r",
+									"        pm.test(\"Категория не должна быть найдена после удаления\", function () {\r",
+									"            pm.expect(response.code).to.eql(404);\r",
+									"        });\r",
+									"    });"
 								],
 								"type": "text/javascript"
 							}
@@ -14192,18 +14409,15 @@
 					"    async get(path, body = null, errorText = \"Ошибка при выполнении get-запроса: \", verbose=null) {",
 					"        return this.sendRequest(\"GET\", path, body, errorText, verbose);",
 					"    }",
-					"",
 					"    async sendRequest(method, path, body=null, errorText = \"Ошибка при выполнении запроса: \", verbose=null) {",
 					"        return new Promise((resolve, reject) => {",
 					"            verbose = verbose == null ? this._verbose : verbose;",
-					"",
 					"            const request = {",
 					"                url: this.baseUrl + path,",
 					"                method: method,",
 					"                body: body == null ? \"\" : JSON.stringify(body),",
 					"                header: { \"Content-Type\": \"application/json\" },",
 					"            };",
-					"",
 					"            if(verbose) {",
 					"                console.log(\"Отправляю запрос: \", request);",
 					"            }",
@@ -14218,13 +14432,16 @@
 					"",
 					"                        reject(new Error(errorText + err));",
 					"                    }",
-					"",
 					"                    if(verbose) {",
 					"                        console.log(\"Результат обработки запроса: код состояния - \", response.code, \", тело: \", response.json());",
 					"                    }",
-					"",
-					"                    resolve(response.json());",
+					"                    if (response.stream.length === 0){",
+					"                        reject(new Error('Отправлено пустое тело ответа'))",
+					"                    }else{",
+					"                        resolve(response.json());",
+					"                    }",
 					"                });",
+					"                ",
 					"            } catch(err) {",
 					"                if(verbose) {",
 					"                    console.error(errorText, err);",
@@ -14247,7 +14464,7 @@
 					"",
 					"    getCategory() {",
 					"        return {",
-					"            name: pm.variables.replaceIn('{{$randomWord}}') + Math.floor(Math.random() * 100).toString()",
+					"            name: pm.variables.replaceIn('{{$randomWord}}') + Math.floor(Math.random() * 10000 * Math.random()).toString()",
 					"        };",
 					"    }",
 					"",
