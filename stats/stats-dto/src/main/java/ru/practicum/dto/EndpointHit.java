@@ -1,12 +1,14 @@
 package ru.practicum.dto;
 
 import lombok.Builder;
+import lombok.Data;
 import lombok.Value;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Builder(toBuilder = true)
+@Data
 @Value
 public class EndpointHit {
 

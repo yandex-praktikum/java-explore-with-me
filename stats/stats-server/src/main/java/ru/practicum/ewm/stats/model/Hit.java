@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "hits")
 @Builder(toBuilder = true)
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Hit {
