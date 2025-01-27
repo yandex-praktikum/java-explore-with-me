@@ -1,15 +1,27 @@
-version: '3.1'
 services:
-  stats-server:
+  statservice:
     ports:
       - "9090:9090"
 
   stats-db:
-    image: postgres:14-alpine
+    image: postgres:16.1
+    container_name: postgres
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_PASSWORD=statservice
+      - POSTGRES_USER=statservice
+      - POSTGRES_DB=statservice
+    healthcheck:
+      test: pg_isready -q -d $$POSTGRES_DB -U $$POSTGRES_USER
+      timeout: 5s
+      interval: 5s
+      retries: 10
 
   ewm-service:
     ports:
       - "8080:8080"
 
   ewm-db:
-    image: postgres:14-alpine
+    image: postgres:16.1
+    container_name: postgres
