@@ -1,14 +1,28 @@
 services:
   stats-server:
+    build:
+      context: ./stats-server
+      dockerfile: Dockerfile
     ports:
       - "9090:9090"
 
   stats-db:
     image: postgres:16.1
+    environment:
+      POSTGRES_USER: stats_user
+      POSTGRES_PASSWORD: stats_pass
+      POSTGRES_DB: stats_db
 
   ewm-service:
+    build:
+      context: ./ewm-service
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
 
   ewm-db:
     image: postgres:16.1
+    environment:
+      POSTGRES_USER: ewm_user
+      POSTGRES_PASSWORD: ewm_pass
+      POSTGRES_DB: ewm_db
