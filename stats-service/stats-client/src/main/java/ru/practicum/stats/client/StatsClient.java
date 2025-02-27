@@ -1,4 +1,4 @@
-package ru.practicum.stats;
+package ru.practicum.stats.client;
 
 import org.springframework.web.client.RestTemplate;
 import ru.practicum.stats.dto.HitDto;
