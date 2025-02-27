@@ -1,5 +1,3 @@
-package client;
-
 import org.springframework.web.client.RestTemplate;
 import server.model.Hit;
 

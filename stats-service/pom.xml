@@ -9,7 +9,13 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>stats-server</artifactId>
+    <artifactId>stats-service</artifactId>
+
+    <modules>
+        <module>stats-client</module>
+        <module>stats-server</module>
+        <module>stats-dto</module>
+    </modules>
 
     <dependencies>
         <dependency>
