@@ -4,7 +4,9 @@ import org.springframework.stereotype.Service;
 import ru.practicum.stats.dto.HitDto;
 import ru.practicum.stats.dto.StatsDto;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StatsService {
@@ -15,25 +17,34 @@ public class StatsService {
         this.hitRepository = hitRepository;
     }
 
-    // Метод сохранения запроса
     public void saveHit(HitDto hitDto) {
         Hit hit = convertToEntity(hitDto);
         hitRepository.save(hit);
     }
 
-    // Метод конвертации DTO -> Entity
     private Hit convertToEntity(HitDto hitDto) {
         Hit hit = new Hit();
         hit.setApp(hitDto.getApp());
         hit.setUri(hitDto.getUri());
         hit.setIp(hitDto.getIp());
-        // Прямое присваивание, так как уже LocalDateTime
         hit.setTimestamp(hitDto.getTimestamp());
         return hit;
     }
 
-    // Метод получения статистики (заглушка)
     public List<StatsDto> getStats(String start, String end, List<String> uris, boolean unique) {
-        return List.of();
+        LocalDateTime startTime = LocalDateTime.parse(start);
+        LocalDateTime endTime = LocalDateTime.parse(end);
+
+        List<Object[]> results;
+        if (unique) {
+            results = hitRepository.findStatsUnique(startTime, endTime, uris);
+        } else {
+            results = hitRepository.findStatsNonUnique(startTime, endTime, uris);
+        }
+
+        return results.stream()
+                .map(result -> new StatsDto((String) result[0], (String) result[1], (Long) result[2]))
+                .collect(Collectors.toList());
     }
+
 }
