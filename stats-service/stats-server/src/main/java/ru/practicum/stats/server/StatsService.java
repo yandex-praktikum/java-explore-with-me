@@ -5,6 +5,7 @@ import ru.practicum.stats.dto.HitDto;
 import ru.practicum.stats.dto.StatsDto;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,8 +33,10 @@ public class StatsService {
     }
 
     public List<StatsDto> getStats(String start, String end, List<String> uris, boolean unique) {
-        LocalDateTime startTime = LocalDateTime.parse(start);
-        LocalDateTime endTime = LocalDateTime.parse(end);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        LocalDateTime startTime = LocalDateTime.parse(start, formatter);
+        LocalDateTime endTime = LocalDateTime.parse(end, formatter);
 
         List<Object[]> results;
         if (unique) {

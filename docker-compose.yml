@@ -18,6 +18,8 @@ services:
       POSTGRES_USER: stats_user
       POSTGRES_PASSWORD: stats_pass
       POSTGRES_DB: stats_db
+    ports:
+      - "5432:5432"
 
   ewm-service:
     build:

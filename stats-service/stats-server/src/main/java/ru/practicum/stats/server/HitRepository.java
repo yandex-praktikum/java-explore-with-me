@@ -12,13 +12,15 @@ public interface HitRepository extends JpaRepository<Hit, Long> {
             "FROM Hit h " +
             "WHERE h.timestamp BETWEEN :start AND :end " +
             "AND (:uris IS NULL OR h.uri IN :uris) " +
-            "GROUP BY h.app, h.uri")
+            "GROUP BY h.app, h.uri " +
+            "ORDER BY COUNT(DISTINCT h.ip) DESC") // Добавил сортировку по убыванию
     List<Object[]> findStatsUnique(LocalDateTime start, LocalDateTime end, @Param("uris") List<String> uris);
 
     @Query("SELECT h.app, h.uri, COUNT(h.ip) " +
             "FROM Hit h " +
             "WHERE h.timestamp BETWEEN :start AND :end " +
             "AND (:uris IS NULL OR h.uri IN :uris) " +
-            "GROUP BY h.app, h.uri")
+            "GROUP BY h.app, h.uri " +
+            "ORDER BY COUNT(h.ip) DESC") // Добавил сортировку по убыванию
     List<Object[]> findStatsNonUnique(LocalDateTime start, LocalDateTime end, @Param("uris") List<String> uris);
 }
