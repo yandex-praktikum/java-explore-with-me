@@ -1,8 +1,8 @@
 package ru.practicum;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
-import org.jetbrains.annotations.NotNull;
 
 @Data
 @Builder
