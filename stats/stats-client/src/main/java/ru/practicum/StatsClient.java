@@ -33,7 +33,6 @@ public class StatsClient {
         }
         query.append("unique=" + unique);
 
-        List<StatsDto> result = restTemplate.getForObject(query.toString(), List.class);
-        return result;
+        return restTemplate.getForObject(query.toString(), List.class);
     }
 }
