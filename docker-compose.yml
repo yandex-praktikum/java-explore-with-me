@@ -1,15 +1,71 @@
 version: '3.1'
 services:
-  stats-server:
+  stats-server:  # statistics service
+    build: ./stats/stats-server
+    container_name: stats-server
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://stats-db/stat_db
+      SPRING_DATASOURCE_USERNAME: stat_user
+      SPRING_DATASOURCE_PASSWORD: stat_pass
+    healthcheck:
+      test: curl -f http://stats-server/actuator/health || exit 1
+      timeout: 10s
+      interval: 7s
+      retries: 10
     ports:
       - "9090:9090"
+    depends_on:
+      - stats-db
+    restart: on-failure
 
-  stats-db:
-    image: postgres:14-alpine
+  stats-db: # db for saving statistics
+    image: postgres:16.1
+    container_name: stats-db
+    ports:
+      - "6431:5432"
+    environment:
+      - POSTGRES_PASSWORD=stat_pass
+      - POSTGRES_USER=stat_user
+      - POSTGRES_DB=stat_db
+    healthcheck:
+      test: pg_isready -q -d $$POSTGRES_DB -U $$POSTGRES_USER
+      timeout: 10s
+      interval: 7s
+      retries: 10
+    restart: on-failure
 
   ewm-service:
+    build: ./main-service
+    container_name: main-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://main-db/main_db
+      SPRING_DATASOURCE_USERNAME: main_user
+      SPRING_DATASOURCE_PASSWORD: main_pass
+      STAT_URL: http://stats-server:9090
+    healthcheck:
+      test: curl -f http://main-service/actuator/health || exit 1
+      timeout: 10s
+      interval: 7s
+      retries: 10
     ports:
       - "8080:8080"
+    depends_on:
+      - ewm-db
+      - stats-server
+    restart: on-failure
 
-  ewm-db:
-    image: postgres:14-alpine
+  ewm-db:  # main db
+    image: postgres:16.1
+    container_name: main-db
+    ports:
+      - "6432:5432"
+    environment:
+      - POSTGRES_PASSWORD=main_pass
+      - POSTGRES_USER=main_user
+      - POSTGRES_DB=main_db
+    healthcheck:
+      test: pg_isready -q -d $$POSTGRES_DB -U $$POSTGRES_USER
+      timeout: 10s
+      interval: 7s
+      retries: 10
+    restart: on-failure

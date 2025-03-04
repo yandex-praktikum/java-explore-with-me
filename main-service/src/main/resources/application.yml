@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: main-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/main_db
+    username: main_user
+    password: main_pass
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+  sql:
+    init:
+      mode: always
+
+server:
+  port: 8080
+  error:
+    include-stacktrace: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info
