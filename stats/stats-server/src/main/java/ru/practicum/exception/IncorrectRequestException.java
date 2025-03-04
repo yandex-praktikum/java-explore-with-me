@@ -1,7 +1,7 @@
 package ru.practicum.exception;
 
-public class BadRequestException extends RuntimeException {
-    public BadRequestException(String message) {
+public class IncorrectRequestException extends RuntimeException {
+    public IncorrectRequestException(String message) {
         super(message);
     }
 }

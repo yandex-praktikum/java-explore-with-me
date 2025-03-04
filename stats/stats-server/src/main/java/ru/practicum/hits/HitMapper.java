@@ -1,4 +1,4 @@
-package ru.practicum.hit;
+package ru.practicum.hits;
 
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
@@ -18,8 +18,6 @@ public interface HitMapper {
 
     @Mapping(target = "timestamp", source = "timestamp", dateFormat = "yyyy-MM-dd HH:mm:ss")
     Hit toEntity(HitRequest request);
-
-    StatsDto toStatDto(Stat stat);
 
     List<StatsDto> toStatDto(List<Stat> stats);
 }

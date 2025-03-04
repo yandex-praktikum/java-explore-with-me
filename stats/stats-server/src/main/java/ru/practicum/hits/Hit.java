@@ -1,9 +1,11 @@
-package ru.practicum.hit;
+package ru.practicum.hits;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+
+// DB level validation
 
 @Entity
 @Getter

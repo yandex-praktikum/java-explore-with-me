@@ -6,8 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.practicum.hit.HitMapper;
-import ru.practicum.hit.HitService;
+import ru.practicum.StatsDto;
+import ru.practicum.hits.HitMapper;
+import ru.practicum.hits.HitService;
 
 import java.time.LocalDateTime;
 import java.util.List;
