@@ -1,0 +1,2 @@
+CREATE TABLE IF NOT EXISTS ewm_db (
+);
